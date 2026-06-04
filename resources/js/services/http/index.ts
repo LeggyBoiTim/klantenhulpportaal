@@ -4,14 +4,23 @@ import { destroyErrors, destroyMessage, setErrorBag, setMessage } from '../error
 const http = axios.create({
     baseURL: '/api',
     headers: {
-        'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Origin': window.location.origin
     }
 });
+
+const setCSRFToken = () => {
+    return http.get('/sanctum/csrf-cookie');
+};
 
 http.interceptors.request.use(
     config => {
         destroyErrors(); // Wis oude fouten voordat een nieuw verzoek wordt uitgevoerd
         destroyMessage(); // Wis oude "messages" voordat een nieuw verzoek wordt uitgevoerd
+        if ((config.method === 'post' || config.method === 'put' || config.method === 'delete') && !http.defaults.headers.common['X-CSRF-TOKEN']) {
+            return setCSRFToken().then(response => config);
+        }
         return config;
     },
     error => Promise.reject(error)
