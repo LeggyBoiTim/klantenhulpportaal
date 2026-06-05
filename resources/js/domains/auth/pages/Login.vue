@@ -4,6 +4,7 @@
 </template>
 
 <script setup lang="ts">
+import { createAuth } from '../store.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Form from '../components/Form.vue';
@@ -17,6 +18,6 @@ const user = ref({
 
 const handleSubmit = async (data) => {
     await createAuth(data);
-    router.push('/');
+    router.push({ name: 'auth.home' });
 }
 </script>

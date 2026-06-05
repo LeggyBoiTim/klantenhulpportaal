@@ -6,7 +6,6 @@ const http = axios.create({
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Origin': window.location.origin
     }
 });
 
