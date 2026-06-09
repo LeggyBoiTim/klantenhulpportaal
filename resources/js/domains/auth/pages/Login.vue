@@ -18,6 +18,6 @@ const user = ref({
 
 const handleSubmit = async (data) => {
     await createAuth(data);
-    router.push({ name: 'auth.home' });
+    router.push({ name: 'tickets.overview' });
 }
 </script>

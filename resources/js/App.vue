@@ -1,7 +1,6 @@
 <template>
     <nav>
-        
-        <RouterLink to="/home">Home</RouterLink> | 
+        <RouterLink to="/tickets">Tickets</RouterLink> |
         <RouterLink to="/login">Login</RouterLink> | 
         <button @click="handleLogout">Logout</button>
     </nav>
