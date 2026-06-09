@@ -1,5 +1,6 @@
 <template>
     <nav>
+        
         <RouterLink to="/home">Home</RouterLink> | 
         <RouterLink to="/login">Login</RouterLink> | 
         <button @click="handleLogout">Logout</button>

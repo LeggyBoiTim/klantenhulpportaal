@@ -1,17 +1,15 @@
 <template>
-    <ErrorMessage />
-
     <form @submit.prevent="handleSubmit">
         <label for="email">Email</label>
         <input type="email" id="email" v-model="form.email" required/>
-        <FormError name="email" />
 
         <label for="password">Password</label>
         <input type="password" id="password" v-model="form.password" required/>
-        <FormError name="password" />
 
         <button type="submit">Login</button>
     </form>
+    
+    <ErrorMessage />
 </template>
 
 <script setup lang="ts">

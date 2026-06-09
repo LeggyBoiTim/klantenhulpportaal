@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +15,10 @@ class AuthController extends Controller
  
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(['message' => 'Authentication successful']);
+            return response()->json(['message' => 'Je bent succesvol ingelogd.']);
         }
  
-        return response()->json(['message' => 'The provided credentials do not match our records.'], 422);
+        return response()->json(['message' => 'De ingevoerde gegevens zijn niet juist.'], 422);
     }
 
     public function logout(Request $request): JsonResponse
@@ -26,7 +26,7 @@ class AuthController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return response()->json(['message' => 'Logged out successfully']);
+        return response()->json(['message' => 'Je bent succesvol uitgelogd.']);
     }
 
     public function user(Request $request): JsonResponse
