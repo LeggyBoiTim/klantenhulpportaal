@@ -2,7 +2,7 @@
     <nav>
         <RouterLink to="/tickets">Tickets</RouterLink> |
         <RouterLink to="/login">Login</RouterLink> | 
-        <button @click="handleLogout">Logout</button>
+        <button @click="handleLogout" style="cursor: pointer;">Logout</button>
     </nav>
     <router-view></router-view>
 </template>
