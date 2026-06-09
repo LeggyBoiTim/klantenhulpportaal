@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->hasMany(Note::class);
     }
 
+    public function reactions(): HasMany
+    {
+        return $this->hasMany(Reaction::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

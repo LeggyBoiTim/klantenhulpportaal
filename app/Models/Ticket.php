@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,14 +12,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable(['assigned_id', 'category_id', 'user_id', 'title', 'content', 'status'])]
 class Ticket extends Model
 {
-    public function reactions(): HasMany
-    {
-        return $this->hasMany(Reaction::class);
-    }
+    /** @use HasFactory<TicketFactory> */
+    use HasFactory;
 
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
+    }
+    
+    public function reactions(): HasMany
+    {
+        return $this->hasMany(Reaction::class);
     }
 
     public function user(): BelongsTo
