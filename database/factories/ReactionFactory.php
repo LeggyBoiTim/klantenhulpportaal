@@ -22,7 +22,7 @@ class ReactionFactory extends Factory
         return [
             'ticket_id' => Ticket::inRandomOrder()->first()->id,
             'user_id' => User::where('role', 'admin')->inRandomOrder()->first()->id,
-            'content' => $this->faker->sentence(),
+            'content' => fake()->sentence(),
         ];
     }
 }
