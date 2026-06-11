@@ -1,13 +1,17 @@
-import { deleteRequest, postRequest } from '../../services/http';
+import { deleteRequest, getRequest, postRequest } from '../../services/http';
 import { storeModuleFactory } from '../../services/store';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const authStore = storeModuleFactory('auth');
 
 authStore.actions.getAll();
 
 // getters
-export const getAuth = authStore.getters.all;
+export const getAuth = async () => {
+    const { data } = await getRequest('auth');
+    if (!data) return;
+    authStore.setters.setAll([data]);
+};
 
 // actions
 export const createAuth = async (newAuth) => {
