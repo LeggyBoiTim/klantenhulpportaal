@@ -1,6 +1,5 @@
 import { deleteRequest, getRequest, postRequest } from '../../services/http';
 import { storeModuleFactory } from '../../services/store';
-import { ref } from 'vue';
 
 const authStore = storeModuleFactory('auth');
 

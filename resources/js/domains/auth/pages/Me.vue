@@ -1,8 +1,7 @@
 <template>
-    <div v-if="currentUser">
-        <p>Name: {{ currentUser.name }}</p>
-        <p>Email: {{ currentUser.email }}</p>
-        <button @click="handleBack" style="cursor: pointer;">Go back</button>
+    <div v-if="auth">
+        <p>Name: {{ auth.name }}</p>
+        <p>Email: {{ auth.email }}</p>
     </div>
 </template>
 
@@ -12,18 +11,14 @@ import { useRouter } from 'vue-router';
 import { getRequest } from '../../../services/http';
 
 const router = useRouter();
-const currentUser = ref(null);
+const auth = ref(null);
 
 onMounted(async () => {
     try {
         const response = await getRequest('user');
-        currentUser.value = response.data;
-    } catch (error) {
+        auth.value = response.data;
+    } catch {
         router.push({ name: 'auth.login' })
     }
 });
-
-const handleBack = async () => {
-    router.push({ name: 'tickets.overview' });
-};
 </script>
