@@ -1,5 +1,4 @@
 import { storeModuleFactory } from '../../services/store';
-import { onMounted } from 'vue';
 
 const reactionStore = storeModuleFactory('reactions');
 

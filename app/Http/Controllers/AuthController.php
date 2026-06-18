@@ -15,7 +15,7 @@ class AuthController extends Controller
  
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(['message' => 'Je bent succesvol ingelogd.']);
+            return response()->json(['user' => Auth::user(), 'message' => 'Je bent succesvol ingelogd.']);
         }
  
         return response()->json(['message' => 'De ingevoerde gegevens zijn niet juist.'], 422);

@@ -1,18 +1,27 @@
 import { deleteRequest, getRequest, postRequest } from '../../services/http';
-import { storeModuleFactory } from '../../services/store';
+import { ref, computed } from 'vue';
 
-const authStore = storeModuleFactory('auth');
+const user = ref(null);
 
-authStore.actions.getAll();
+// getters
+export const loggedInUser = computed(() => user.value);
 
 // actions
-export const createAuth = async (newAuth) => {
-    const { data } = await postRequest('auth', newAuth);
+export const me = async () => {
+    const { data } = await getRequest('user');
     if (!data) return;
-    authStore.setters.setAll([data]);
+    user.value = data;
+};
+
+me();
+
+export const createAuth = async (login) => {
+    const { data } = await postRequest('auth', login);
+    if (!data) return;
+    user.value = data.user;
 };
 
 export const deleteAuth = async () => {
     await deleteRequest('auth');
-    authStore.setters.deleteByItem({ id: undefined });
+    user.value = null;
 };
