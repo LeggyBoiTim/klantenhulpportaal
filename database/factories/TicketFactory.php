@@ -26,6 +26,7 @@ class TicketFactory extends Factory
             'title' => fake()->text(50),
             'content' => fake()->paragraph(),
             'status' => fake()->randomElement(['open', 'in_progress', 'closed']),
+            'created_at' => fake()->dateTimeThisYear(),
         ];
     }
 }

@@ -2,26 +2,26 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Titel</th>
-                <th>Categorieën</th>
-                <th>Status</th>
-                <th>Aangemaakt door</th>
-                <th>Aangemaakt op</th>
-                <th>Laatste update op</th>
-                <th>Toegewezen aan</th>
+                <th @click='sortBy("id")'>ID {{ getSortIcon('id') }}</th>
+                <th @click='sortBy("title")'>Titel {{ getSortIcon('title') }}</th>
+                <th @click='sortBy("category_id")'>Categorieën {{ getSortIcon('category_id') }}</th>
+                <th @click='sortBy("status")'>Status {{ getSortIcon('status') }}</th>
+                <th @click='sortBy("user_id")'>Aangemaakt door {{ getSortIcon('user_id') }}</th>
+                <th @click='sortBy("created_at")'>Aangemaakt op {{ getSortIcon('created_at') }}</th>
+                <th @click='sortBy("updated_at")'>Laatste update op {{ getSortIcon('updated_at') }}</th>
+                <th @click='sortBy("assigned_id")'>Toegewezen aan {{ getSortIcon('assigned_id') }}</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="ticket in getTickets" :key="ticket.id">
-                <td>{{ ticket.id }}</td>
+            <tr v-for="ticket in sortedTickets" :key="ticket.id">
+                <td style="text-align: right;">{{ ticket.id }}</td>
                 <td>{{ ticket.title }}</td>
                 <td>{{ getCategoryById(ticket.category_id).value.title }}</td>
-                <td>{{ ticket.status }}</td>
+                <td>{{ formatStatus(ticket.status) }}</td>
                 <td>{{ getUserById(ticket.user_id).value.name }}</td>
-                <td>{{ ticket.created_at }}</td>
-                <td>{{ ticket.updated_at }}</td>
-                <td>{{ ticket.assigned_id }}</td>
+                <td>{{ formatDate(ticket.created_at) }}</td>
+                <td>{{ formatDate(ticket.updated_at) }}</td>
+                <td>{{ getUserById(ticket.assigned_id).value.name }}</td>
                 <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
                 <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
                 <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
@@ -31,7 +31,48 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { getCategoryById } from '../../categories/store';
 import { getUserById } from '../../users/store';
 import { getTickets, deleteTicket } from '../store';
+
+const sortKey = ref('created_at');
+const sortOrder = ref('desc');
+
+const sortedTickets = computed(() => {
+    return [...Object.values(getTickets.value)].sort((a, b) => {
+        let aVal = a[sortKey.value];
+        let bVal = b[sortKey.value];
+        if (typeof aVal === 'string') {
+            aVal = aVal.toLowerCase();
+            bVal = bVal.toLowerCase();
+        }
+        if (aVal < bVal) return sortOrder.value === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortOrder.value === 'asc' ? 1 : -1;
+        return 0;
+    });
+});
+
+const sortBy = (key) => {
+    if (sortKey.value === key) {;
+        sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortKey.value = key;
+        sortOrder.value = 'asc';
+    }
+}
+
+const getSortIcon = (key) => {
+    if (sortKey.value !== key) return '';
+    return sortOrder.value === 'asc' ? '↑' : '↓';
+}
+
+const formatDate = (string) => {
+    let date = new Date(string);
+    return date.toLocaleDateString("nl-NL", {day: "2-digit", month: "2-digit", year: "numeric"}) + ' ' + date.toLocaleTimeString();
+}
+
+const formatStatus = (string) => {
+    return string === "open" ? "In afwachting" : string === "in_progress" ? "In behandeling" : string === "closed" ? "Afgehandeld" : "";
+}
 </script>
