@@ -34,27 +34,23 @@
 import { computed, ref } from 'vue';
 import { getCategoryById } from '../../categories/store';
 import { getUserById } from '../../users/store';
-import { getTickets, deleteTicket } from '../store';
+import { deleteTicket, getTickets, Status, Ticket } from '../store';
 
 const sortKey = ref('created_at');
 const sortOrder = ref('desc');
 
 const sortedTickets = computed(() => {
-    return [...Object.values(getTickets.value)].sort((a, b) => {
-        let aVal = a[sortKey.value];
-        let bVal = b[sortKey.value];
-        if (typeof aVal === 'string') {
-            aVal = aVal.toLowerCase();
-            bVal = bVal.toLowerCase();
-        }
+    return [...getTickets.value].sort((a, b) => {
+        let aVal = a[sortKey.value as keyof Ticket];
+        let bVal = b[sortKey.value as keyof Ticket];
         if (aVal < bVal) return sortOrder.value === 'asc' ? -1 : 1;
         if (aVal > bVal) return sortOrder.value === 'asc' ? 1 : -1;
         return 0;
     });
 });
 
-const sortBy = (key) => {
-    if (sortKey.value === key) {;
+const sortBy = (key: string) => {
+    if (sortKey.value === key) {
         sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
     } else {
         sortKey.value = key;
@@ -62,17 +58,17 @@ const sortBy = (key) => {
     }
 }
 
-const getSortIcon = (key) => {
+const getSortIcon = (key: string) => {
     if (sortKey.value !== key) return '';
     return sortOrder.value === 'asc' ? '↑' : '↓';
 }
 
-const formatDate = (string) => {
-    let date = new Date(string);
-    return date.toLocaleDateString("nl-NL", {day: "2-digit", month: "2-digit", year: "numeric"}) + ' ' + date.toLocaleTimeString();
+const formatDate = (date: Date) => {
+    let newDate = new Date(date);
+    return newDate.toLocaleDateString("nl-NL", {day: "2-digit", month: "2-digit", year: "numeric"}) + ' ' + newDate.toLocaleTimeString();
 }
 
-const formatStatus = (string) => {
-    return string === "open" ? "In afwachting" : string === "in_progress" ? "In behandeling" : string === "closed" ? "Afgehandeld" : "";
+const formatStatus = (status: Status) => {
+    return status === Status.Open ? "In afwachting" : status === Status.InProgress ? "In behandeling" : "Afgehandeld";
 }
 </script>

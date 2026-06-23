@@ -6,7 +6,7 @@ noteStore.actions.getAll();
 
 // getters
 export const getNotes = noteStore.getters.all;
-export const getNoteById = (id) => noteStore.getters.getById(id);
+export const getNoteById = (id) => noteStore.getters.byId(id);
 
 // actions
 export const createNote = async (newNote) => {

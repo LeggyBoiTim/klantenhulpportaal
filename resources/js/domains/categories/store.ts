@@ -6,7 +6,7 @@ categoryStore.actions.getAll();
 
 // getters
 export const getCategories = categoryStore.getters.all;
-export const getCategoryById = (id) => categoryStore.getters.getById(id);
+export const getCategoryById = (id) => categoryStore.getters.byId(id);
 
 // actions
 export const createCategory = async (newCategory) => {

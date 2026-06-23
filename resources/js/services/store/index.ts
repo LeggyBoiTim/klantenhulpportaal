@@ -1,20 +1,27 @@
-import { ref, computed } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import { deleteRequest, getRequest, postRequest, putRequest } from '../http';
 
-export const storeModuleFactory = (moduleName) => {
-    const state = ref({});
+type State<T extends {id: number}> = Ref<{[id: number]: Readonly<T>}>;
+type New<T extends {id: number}> = Omit<T, 'id'>;
+type Updatable<T extends {id: number}> = New<T> & {id?: number;};
+
+export const storeModuleFactory = <T extends {id: number}>(moduleName: string) => {
+    const state: State<T> = ref({});
 
     const getters = {
-        all: computed(() => state.value),
-        getById: (id) => computed(() => state.value[id])
+        all: computed(() => Object.values(state.value)),
+        byId: (id: number) => computed(() => state.value[id])
     };
 
     const setters = {
-        setAll: (items) => {
+        setAll: (items: T[]) => {
             for (const item of items) state.value[item.id] = Object.freeze(item);
         },
-        deleteByItem: (item) => {
-            delete state.value[item.id];
+        setById: (item: T) => {
+            state.value[item.id] = Object.freeze(item);
+        },
+        deleteById: (id: number) => {
+            delete state.value[id];
         }
     };
 
@@ -24,19 +31,24 @@ export const storeModuleFactory = (moduleName) => {
             if (!data) return;
             setters.setAll(data);
         },
-        create: async (item) => {
+        getById: async (id: number) => {
+            const {data} = await getRequest(`${moduleName}/${id}`);
+            if (!data) return;
+            setters.setById(data);
+        },
+        create: async (item: New<T>) => {
             const { data } = await postRequest(moduleName, item);
             if (!data) return;
-            setters.setAll(data);
+            setters.setById(data);
         },
-        update: async (id, item) => {
+        update: async (id: number, item: Updatable<T>) => {
             const { data } = await putRequest(`${moduleName}/${id}`, item);
             if (!data) return;
-            setters.setAll(data);
+            setters.setById(data);
         },
-        delete: async (id) => {
+        delete: async (id: number) => {
             await deleteRequest(`${moduleName}/${id}`);
-            setters.deleteByItem({ id });
+            setters.deleteById(id);
         }
     };
 

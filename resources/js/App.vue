@@ -5,7 +5,7 @@
         <button v-if="loggedInUser" @click="handleLogout" style="cursor: pointer;">Logout</button>
         <RouterLink v-if="!loggedInUser" to="/login">Login</RouterLink>
     </nav>
-    <router-view></router-view>
+    <router-view />
 </template>
 
 <script setup lang="ts">

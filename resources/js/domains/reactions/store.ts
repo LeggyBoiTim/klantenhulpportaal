@@ -6,7 +6,7 @@ reactionStore.actions.getAll();
 
 // getters
 export const getReactions = reactionStore.getters.all;
-export const getReactionById = (id) => reactionStore.getters.getById(id);
+export const getReactionById = (id) => reactionStore.getters.byId(id);
 
 // actions
 export const createReaction = async (newReaction) => {

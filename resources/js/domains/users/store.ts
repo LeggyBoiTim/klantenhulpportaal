@@ -6,7 +6,7 @@ userStore.actions.getAll();
 
 // getters
 export const getUsers = userStore.getters.all;
-export const getUserById = (id) => userStore.getters.getById(id);
+export const getUserById = (id) => userStore.getters.byId(id);
 
 // actions
 export const createUser = async (newUser) => {
