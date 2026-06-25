@@ -15,7 +15,7 @@ const router = useRouter();
 const ticket = ref({
     assigned_id: null,
     category_id: '',
-    user_id: currentUser.value.id,
+    user_id: currentUser.value?.id,
     title: '',
     content: '',
     status: 'open'

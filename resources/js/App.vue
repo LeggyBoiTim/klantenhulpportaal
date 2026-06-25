@@ -6,7 +6,7 @@
             <RouterLink to="/me">Me</RouterLink> |
             <button @click="handleLogout" style="cursor: pointer;">Logout</button>
         </span> 
-        <RouterLink v-if="!currentUser" to="/login">Login</RouterLink>
+        <RouterLink v-else to="/login">Login</RouterLink>
     </nav>
     <router-view />
 </template>

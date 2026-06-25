@@ -12,19 +12,21 @@
                 <th @click='sortBy("assigned_id")'>Toegewezen aan {{ getSortIcon('assigned_id') }}</th>
             </tr>
         </thead>
-        <tbody v-for="ticket in sortedTickets" :key="ticket.id">
-            <tr v-if="isCurrentUser(ticket.user_id).value || currentUserIsAdmin">
-                <td style="text-align: right;">{{ ticket.id }}</td>
-                <td>{{ ticket.title }}</td>
-                <td>{{ getCategoryById(ticket.category_id).value.title }}</td>
-                <td>{{ formatStatus(ticket.status) }}</td>
-                <td>{{ getUserById(ticket.user_id) }}</td>
-                <td>{{ formatDate(ticket.created_at) }}</td>
-                <td>{{ formatDate(ticket.updated_at) }}</td>
-                <td>{{ getUserById(ticket.assigned_id) || 'Nog niet toegewezen' }}</td>
-                <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
-                <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
-                <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
+        <tbody>
+            <tr v-for="ticket in sortedTickets" :key="ticket.id">
+                <template v-if="isCurrentUser(ticket.user_id).value || currentUserIsAdmin">
+                    <td style="text-align: right;">{{ ticket.id }}</td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ getCategoryById(ticket.category_id).value?.title }}</td>
+                    <td>{{ formatStatus(ticket.status) }}</td>
+                    <td>{{ getUserById(ticket.user_id).value?.name }}</td>
+                    <td>{{ formatDate(ticket.created_at) }}</td>
+                    <td>{{ formatDate(ticket.updated_at) }}</td>
+                    <td>{{ getUserById(ticket.assigned_id).value?.name ?? 'Nog niet toegewezen' }}</td>
+                    <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
+                    <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
+                    <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
+                </template>
             </tr>
         </tbody>
     </table>
@@ -42,8 +44,8 @@ const sortOrder = ref('desc');
 
 const sortedTickets = computed(() => {
     return [...getTickets.value].sort((a, b) => {
-        let aVal = a[sortKey.value as keyof Ticket];
-        let bVal = b[sortKey.value as keyof Ticket];
+        const aVal = a[sortKey.value as keyof Ticket];
+        const bVal = b[sortKey.value as keyof Ticket];
         if (aVal < bVal) return sortOrder.value === 'asc' ? -1 : 1;
         if (aVal > bVal) return sortOrder.value === 'asc' ? 1 : -1;
         return 0;
