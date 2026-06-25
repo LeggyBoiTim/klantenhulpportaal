@@ -25,6 +25,7 @@ class TicketRequest extends BaseFormRequest
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string', 'max:1000'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 }

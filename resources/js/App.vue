@@ -1,15 +1,18 @@
 <template>
     <nav>
-        <RouterLink v-if="loggedInUser" to="/tickets">Tickets</RouterLink>
-        <RouterLink v-if="loggedInUser" to="/me">Me</RouterLink>
-        <button v-if="loggedInUser" @click="handleLogout" style="cursor: pointer;">Logout</button>
-        <RouterLink v-if="!loggedInUser" to="/login">Login</RouterLink>
+        <span v-if="currentUser">
+            <RouterLink to="/tickets/create">Nieuwe Ticket</RouterLink> | 
+            <RouterLink to="/tickets">Mijn Tickets</RouterLink> | 
+            <RouterLink to="/me">Me</RouterLink> |
+            <button @click="handleLogout" style="cursor: pointer;">Logout</button>
+        </span> 
+        <RouterLink v-if="!currentUser" to="/login">Login</RouterLink>
     </nav>
     <router-view />
 </template>
 
 <script setup lang="ts">
-import { deleteAuth, loggedInUser } from './domains/auth/store';
+import { deleteAuth, currentUser } from './domains/auth/store';
 import { RouterLink, useRouter} from 'vue-router';
 
 const router = useRouter();
@@ -21,7 +24,8 @@ const handleLogout = async () => {
 </script>
 
 <style>
-* {
+th, td {
     padding-right: 0.5em;
+    text-align: left;
 }
 </style>

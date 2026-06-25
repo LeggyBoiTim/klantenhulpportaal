@@ -12,16 +12,16 @@
                 <th @click='sortBy("assigned_id")'>Toegewezen aan {{ getSortIcon('assigned_id') }}</th>
             </tr>
         </thead>
-        <tbody>
-            <tr v-for="ticket in sortedTickets" :key="ticket.id">
+        <tbody v-for="ticket in sortedTickets" :key="ticket.id">
+            <tr v-if="isCurrentUser(ticket.user_id).value || currentUserIsAdmin">
                 <td style="text-align: right;">{{ ticket.id }}</td>
                 <td>{{ ticket.title }}</td>
                 <td>{{ getCategoryById(ticket.category_id).value.title }}</td>
                 <td>{{ formatStatus(ticket.status) }}</td>
-                <td>{{ getUserById(ticket.user_id).value.name }}</td>
+                <td>{{ getUserById(ticket.user_id) }}</td>
                 <td>{{ formatDate(ticket.created_at) }}</td>
                 <td>{{ formatDate(ticket.updated_at) }}</td>
-                <td>{{ getUserById(ticket.assigned_id).value.name }}</td>
+                <td>{{ getUserById(ticket.assigned_id) || 'Nog niet toegewezen' }}</td>
                 <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
                 <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
                 <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
@@ -32,9 +32,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { deleteTicket, getTickets, Status, Ticket } from '../store';
 import { getCategoryById } from '../../categories/store';
 import { getUserById } from '../../users/store';
-import { deleteTicket, getTickets, Status, Ticket } from '../store';
+import { currentUserIsAdmin, isCurrentUser } from '../../auth/store';
 
 const sortKey = ref('created_at');
 const sortOrder = ref('desc');
@@ -65,7 +66,7 @@ const getSortIcon = (key: string) => {
 
 const formatDate = (date: Date) => {
     let newDate = new Date(date);
-    return newDate.toLocaleDateString("nl-NL", {day: "2-digit", month: "2-digit", year: "numeric"}) + ' ' + newDate.toLocaleTimeString();
+    return newDate.toLocaleDateString("nl-NL", {day: "2-digit", month: "2-digit", year: "numeric"}) + ' ' + newDate.toLocaleTimeString("nl-NL");
 }
 
 const formatStatus = (status: Status) => {

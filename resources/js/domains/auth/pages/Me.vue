@@ -1,10 +1,10 @@
 <template>
-    <div v-if="loggedInUser">
-        <p>Name: {{ loggedInUser.name || 'N/A' }}</p>
-        <p>Email: {{ loggedInUser.email || 'N/A' }}</p>
+    <div v-if="currentUser">
+        <p>Name: {{ currentUser.name || 'N/A' }}</p>
+        <p>Email: {{ currentUser.email || 'N/A' }}</p>
     </div>
 </template>
 
 <script setup lang="ts">
-import { loggedInUser } from '../store';
+import { currentUser } from '../store';
 </script>

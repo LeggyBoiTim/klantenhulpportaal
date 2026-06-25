@@ -4,7 +4,9 @@ import { ref, computed } from 'vue';
 const user = ref(null);
 
 // getters
-export const loggedInUser = computed(() => user.value);
+export const currentUser = computed(() => user.value);
+export const isCurrentUser = (id: number) => computed(() => user.value.id === id);
+export const currentUserIsAdmin = computed (() => user.value.role === 'admin');
 
 // actions
 export const me = async () => {
