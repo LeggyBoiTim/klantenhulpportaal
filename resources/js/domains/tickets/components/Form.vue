@@ -31,7 +31,6 @@ import { ref } from 'vue';
 import { getCategories } from '../../categories/store.js';
 import ErrorMessage from '../../../ErrorMessage.vue';
 import FormError from '../../../FormError.vue';
-import { currentUser } from '../../auth/store.js';
 
 const props = defineProps({ ticket: Object });
 const emit = defineEmits(['submit']);

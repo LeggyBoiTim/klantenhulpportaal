@@ -6,22 +6,25 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { createTicket } from '../store';
+import { createTicket, Status, Ticket } from '../store';
 import { currentUser } from '../../auth/store';
 import Form from '../components/Form.vue';
+import { New } from '../../../services/store';
 
 const router = useRouter();
 
-const ticket = ref({
+const ticket = ref<New<Ticket>>({
     assigned_id: null,
-    category_id: '',
+    category_id: NaN,
     user_id: currentUser.value?.id,
     title: '',
     content: '',
-    status: 'open'
+    status: Status.Open,
+    created_at: new Date,
+    updated_at: new Date()
 });
 
-const handleSubmit = async (data) => {
+const handleSubmit = async (data: Ticket) => {
     await createTicket(data);
     router.push({ name: 'tickets.overview' });
 };

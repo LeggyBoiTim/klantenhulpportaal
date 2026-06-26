@@ -1,9 +1,9 @@
 import { computed, ref, Ref } from 'vue';
 import { deleteRequest, getRequest, postRequest, putRequest } from '../http';
 
-type State<T extends {id: number}> = Ref<{[id: number]: Readonly<T>}>;
-type New<T extends {id: number}> = Omit<T, 'id'>;
-type Updatable<T extends {id: number}> = New<T> & {id?: number;};
+export type State<T extends {id: number}> = Ref<{[id: number]: Readonly<T>}>;
+export type New<T extends {id: number}> = Omit<T, 'id'>;
+export type Updatable<T extends {id: number}> = New<T> & {id?: number;};
 
 export const storeModuleFactory = <T extends {id: number}>(moduleName: string) => {
     const state: State<T> = ref({});

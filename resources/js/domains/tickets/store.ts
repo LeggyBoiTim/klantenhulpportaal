@@ -8,7 +8,7 @@ export enum Status {
 }
 
 export interface Ticket extends Item {
-    assigned_id: number;
+    assigned_id: number | null;
     category_id: number;
     user_id: number;
     title: string;
