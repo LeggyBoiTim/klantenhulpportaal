@@ -46,13 +46,15 @@ const sortedTickets = computed(() => {
     return [...getTickets.value].sort((a, b) => {
         const aVal = a[sortKey.value as keyof Ticket];
         const bVal = b[sortKey.value as keyof Ticket];
+        if (aVal === null) return sortOrder.value === 'asc' ? -1 : 1;
+        if (bVal === null) return sortOrder.value === 'asc' ? -1 : 1;
         if (aVal < bVal) return sortOrder.value === 'asc' ? -1 : 1;
         if (aVal > bVal) return sortOrder.value === 'asc' ? 1 : -1;
         return 0;
     });
 });
 
-const sortBy = (key: string) => {
+const sortBy = (key: keyof Ticket) => {
     if (sortKey.value === key) {
         sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
     } else {
@@ -61,7 +63,7 @@ const sortBy = (key: string) => {
     }
 }
 
-const getSortIcon = (key: string) => {
+const getSortIcon = (key: keyof Ticket) => {
     if (sortKey.value !== key) return '';
     return sortOrder.value === 'asc' ? '↑' : '↓';
 }

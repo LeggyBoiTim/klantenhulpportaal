@@ -14,5 +14,10 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::factory(5)->create();
+        
+        Category::factory()->create([
+            'title' => 'Overig',
+        ]);
+
     }
 }
