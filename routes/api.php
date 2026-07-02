@@ -4,17 +4,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
+Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 Route::post('/auth', [AuthController::class, 'login']);
 Route::delete('/auth', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
@@ -29,4 +25,4 @@ Route::delete('/auth', [AuthController::class, 'logout'])->middleware('auth:sanc
     Route::post('/users', [UserController::class, 'store']);
     Route::put('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
-// });
+});

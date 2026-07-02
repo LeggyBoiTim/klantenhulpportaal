@@ -25,6 +25,8 @@ class TicketResource extends JsonResource
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'reactions' => ReactionResource::collection($this->whenLoaded('reactions')),
+            'notes' => NoteResource::collection($this->whenLoaded('notes')),
             'can' => $this->permissions(),
         ];
     }
@@ -37,7 +39,9 @@ class TicketResource extends JsonResource
     protected function permissions()
     {
         return [
+            'view' => Gate::allows('view', $this->resource),
             'update' => Gate::allows('update', $this->resource),
+            'delete' => Gate::allows('delete', $this->resource),
         ];
     }
 }

@@ -19,9 +19,11 @@ class TicketPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Ticket $ticket): bool
+    public function view(User $user, Ticket $ticket): Response
     {
-        return true;
+        return $user->role === 'admin' || $user->id === $ticket->user_id
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**
@@ -37,7 +39,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): Response
     {
-        return $user->id === $ticket->user_id
+        return $user->role === 'admin' || $user->id === $ticket->user_id
             ? Response::allow()
             : Response::denyWithStatus(403);
     }
@@ -45,9 +47,11 @@ class TicketPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Ticket $ticket): bool
+    public function delete(User $user, Ticket $ticket): Response
     {
-        return true;
+        return $user->role === 'admin' || $user->id === $ticket->user_id
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**
@@ -55,7 +59,7 @@ class TicketPolicy
      */
     public function restore(User $user, Ticket $ticket): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -63,6 +67,6 @@ class TicketPolicy
      */
     public function forceDelete(User $user, Ticket $ticket): bool
     {
-        return true;
+        return false;
     }
 }

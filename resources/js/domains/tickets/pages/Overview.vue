@@ -14,19 +14,17 @@
         </thead>
         <tbody>
             <tr v-for="ticket in sortedTickets" :key="ticket.id">
-                <template v-if="isCurrentUser(ticket.user_id).value || currentUserIsAdmin">
-                    <td style="text-align: right;">{{ ticket.id }}</td>
-                    <td>{{ ticket.title }}</td>
-                    <td>{{ getCategoryById(ticket.category_id).value?.title }}</td>
-                    <td>{{ formatStatus(ticket.status) }}</td>
-                    <td>{{ getUserById(ticket.user_id).value?.name }}</td>
-                    <td>{{ formatDate(ticket.created_at) }}</td>
-                    <td>{{ formatDate(ticket.updated_at) }}</td>
-                    <td>{{ getUserById(ticket.assigned_id).value?.name ?? 'Nog niet toegewezen' }}</td>
-                    <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
-                    <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
-                    <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
-                </template>
+                <td style="text-align: right;">{{ ticket.id }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ getCategoryById(ticket.category_id).value?.title }}</td>
+                <td>{{ formatStatus(ticket.status) }}</td>
+                <td>{{ getUserById(ticket.user_id).value?.name }}</td>
+                <td>{{ formatDate(ticket.created_at) }}</td>
+                <td>{{ formatDate(ticket.updated_at) }}</td>
+                <td>{{ getUserById(ticket.assigned_id).value?.name ?? 'Nog niet toegewezen' }}</td>
+                <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
+                <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
+                <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
             </tr>
         </tbody>
     </table>
@@ -37,7 +35,6 @@ import { computed, ref } from 'vue';
 import { deleteTicket, getTickets, Status, Ticket } from '../store';
 import { getCategoryById } from '../../categories/store';
 import { getUserById } from '../../users/store';
-import { currentUserIsAdmin, isCurrentUser } from '../../auth/store';
 
 const sortKey = ref('created_at');
 const sortOrder = ref('desc');
