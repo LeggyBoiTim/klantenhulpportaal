@@ -20,13 +20,12 @@ class TicketController extends Controller
 
     public function store(TicketRequest $request)
     {
-        Ticket::create($request->validated());
+        $data = $request->validated();
+        $data['user_id'] = auth('sanctum')->user()->id;
 
-        $tickets = auth('sanctum')->user()->role === 'admin'
-            ? Ticket::all()
-            : Ticket::where('user_id', auth('sanctum')->user()->id)->get();
-            
-        return TicketResource::collection($tickets);
+        $ticket = Ticket::create($data);
+
+        return new TicketResource($ticket);
     }
 
     public function update(TicketRequest $request, Ticket $ticket)
@@ -35,11 +34,7 @@ class TicketController extends Controller
 
         $ticket->update($request->validated());
 
-        $tickets = auth('sanctum')->user()->role === 'admin'
-            ? Ticket::all()
-            : Ticket::where('user_id', auth('sanctum')->user()->id)->get();
-            
-        return TicketResource::collection($tickets);
+        return new TicketResource($ticket);
     }
 
     public function destroy(Ticket $ticket)

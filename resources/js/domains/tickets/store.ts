@@ -1,5 +1,7 @@
 import { storeModuleFactory } from '../../services/store';
 import { Item } from '../../types';
+import { Note } from '../notes/store';
+import { Reaction } from '../reactions/store';
 
 export enum Status {
     Open = "open",
@@ -16,6 +18,8 @@ export interface Ticket extends Item {
     status: Status;
     created_at: Date;
     updated_at: Date;
+    reactions: Reaction[];
+    notes: Note[];
 }
 
 const ticketStore = storeModuleFactory<Ticket>('tickets');

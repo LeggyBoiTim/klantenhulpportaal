@@ -1,4 +1,5 @@
 <template>
+    <h1><b>Overzicht</b></h1>
     <table>
         <thead>
             <tr>
@@ -16,15 +17,16 @@
             <tr v-for="ticket in sortedTickets" :key="ticket.id">
                 <td style="text-align: right;">{{ ticket.id }}</td>
                 <td>{{ ticket.title }}</td>
-                <td>{{ getCategoryById(ticket.category_id).value?.title }}</td>
+                <td>{{ getCategoryById(ticket.category_id).value.title }}</td>
                 <td>{{ formatStatus(ticket.status) }}</td>
-                <td>{{ getUserById(ticket.user_id).value?.name }}</td>
+                <td>{{ getUserById(ticket.user_id).value.name }}</td>
                 <td>{{ formatDate(ticket.created_at) }}</td>
                 <td>{{ formatDate(ticket.updated_at) }}</td>
                 <td>{{ getUserById(ticket.assigned_id).value?.name ?? 'Nog niet toegewezen' }}</td>
                 <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
                 <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
                 <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
+                <td><RouterLink :to="{ name: 'tickets.assign', params: { id: ticket.id } }">Toewijzen</RouterLink></td>
             </tr>
         </tbody>
     </table>

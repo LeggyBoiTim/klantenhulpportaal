@@ -1,12 +1,12 @@
 <template>
-    <h1><b>Ticket Wijzigen</b></h1>
-    <Form :ticket="ticket" @submit="handleSubmit" />
+    <h1><b>Ticket Toewijzen aan Administrator</b></h1>
+    <AssignForm :ticket="ticket" @submit="handleSubmit" />
 </template>
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { getTicketById, Ticket, updateTicket } from '../store';
-import Form from '../components/Form.vue';
+import AssignForm from '../components/AssignForm.vue';
 import { ref } from 'vue';
 import { Updatable } from '../../../services/store';
 

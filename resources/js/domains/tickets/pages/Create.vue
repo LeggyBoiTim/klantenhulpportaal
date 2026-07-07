@@ -1,5 +1,5 @@
 <template>
-    <h2><b>Nieuwe Ticket</b></h2>
+    <h1><b>Nieuwe Ticket</b></h1>
     <Form :ticket="ticket" @submit="handleSubmit" />
 </template>
 
@@ -21,7 +21,9 @@ const ticket = ref<New<Ticket>>({
     content: '',
     status: Status.Open,
     created_at: new Date,
-    updated_at: new Date
+    updated_at: new Date,
+    reactions: [],
+    notes: []
 });
 
 const handleSubmit = async (data: Ticket) => {

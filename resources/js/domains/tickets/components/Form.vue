@@ -16,11 +16,10 @@
         </select>
         <FormError name="category_id" />
 
-        <label for="user_id"></label>
         <input id="user_id" v-model="form.user_id" type="hidden" required>
         <FormError name="user_id" />
 
-        <button type="submit">Submit</button>
+        <button type="submit">Opslaan</button>
     </form>
     
     <ErrorMessage />

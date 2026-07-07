@@ -1,22 +1,29 @@
 import { storeModuleFactory } from '../../services/store';
+import { Item } from '../../types';
 
-const reactionStore = storeModuleFactory('reactions');
+export interface Reaction extends Item {
+    ticket_id: number;
+    user_id: number;
+    content: string;
+}
+
+const reactionStore = storeModuleFactory<Reaction>('reactions');
 
 reactionStore.actions.getAll();
 
 // getters
 export const getReactions = reactionStore.getters.all;
-export const getReactionById = (id) => reactionStore.getters.byId(id);
+export const getReactionById = (id: number) => reactionStore.getters.byId(id);
 
 // actions
-export const createReaction = async (newReaction) => {
+export const createReaction = async (newReaction: Reaction) => {
     await reactionStore.actions.create(newReaction);
 };
 
-export const updateReaction = async (id, updatedReaction) => {
+export const updateReaction = async (id: number, updatedReaction: Reaction) => {
     await reactionStore.actions.update(id, updatedReaction);
 };
 
-export const deleteReaction = async (id) => {
+export const deleteReaction = async (id: number) => {
     await reactionStore.actions.delete(id);
 };

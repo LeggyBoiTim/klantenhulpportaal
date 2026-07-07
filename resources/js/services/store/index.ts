@@ -32,7 +32,7 @@ export const storeModuleFactory = <T extends {id: number}>(moduleName: string) =
             setters.setAll(data);
         },
         getById: async (id: number) => {
-            const {data} = await getRequest(`${moduleName}/${id}`);
+            const { data } = await getRequest(`${moduleName}/${id}`);
             if (!data) return;
             setters.setById(data);
         },

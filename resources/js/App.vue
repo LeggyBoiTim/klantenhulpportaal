@@ -8,6 +8,7 @@
         </span> 
         <RouterLink v-else to="/login">Login</RouterLink>
     </nav>
+    <hr>
     <router-view />
 </template>
 
