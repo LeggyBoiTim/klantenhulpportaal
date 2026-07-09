@@ -15,10 +15,6 @@
             </option>
         </select>
         <FormError name="category_id" />
-
-        <input id="user_id" v-model="form.user_id" type="hidden" required>
-        <FormError name="user_id" />
-
         <button type="submit">Opslaan</button>
     </form>
     

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Validation\Rule;
 
 class TicketRequest extends BaseFormRequest
 {
@@ -25,7 +27,11 @@ class TicketRequest extends BaseFormRequest
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string', 'max:1000'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'assigned_id' => ['required', 'integer', 'exists:users,id'],
+            'assigned_id' => ['sometimes', 'nullable', 'integer',
+                Rule::exists('users', 'id')->where(function (Builder $query) {
+                    $query->where('role', 'admin');
+                })
+            ],
         ];
     }
 }

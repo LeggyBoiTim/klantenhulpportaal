@@ -17,6 +17,6 @@ const ticket = ref<Updatable<Ticket>>(getTicketById(Number(route.params.id)).val
 
 const handleSubmit = async (data: Ticket) => {
     await updateTicket(Number(route.params.id), data);
-    router.push({ name: 'tickets.overview' });
+    router.push({ name: 'tickets.show', params: { id: data.id } });
 };
 </script>

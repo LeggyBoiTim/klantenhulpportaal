@@ -30,7 +30,11 @@ class TicketController extends Controller
 
     public function update(TicketRequest $request, Ticket $ticket)
     {
-        Gate::authorize('update', $ticket);
+        if ($request->has('assigned_id') && $request->input('assigned_id') !== $ticket->assigned_id) {
+            Gate::authorize('assign', $ticket);
+        } else {
+            Gate::authorize('update', $ticket);
+        }
 
         $ticket->update($request->validated());
 

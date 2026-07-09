@@ -17,16 +17,13 @@
             <tr v-for="ticket in sortedTickets" :key="ticket.id">
                 <td style="text-align: right;">{{ ticket.id }}</td>
                 <td>{{ ticket.title }}</td>
-                <td>{{ getCategoryById(ticket.category_id).value.title }}</td>
+                <td>{{ getCategoryById(ticket.category_id).value?.title }}</td>
                 <td>{{ formatStatus(ticket.status) }}</td>
-                <td>{{ getUserById(ticket.user_id).value.name }}</td>
+                <td>{{ getUserById(ticket.user_id).value?.name }}</td>
                 <td>{{ formatDate(ticket.created_at) }}</td>
                 <td>{{ formatDate(ticket.updated_at) }}</td>
                 <td>{{ getUserById(ticket.assigned_id).value?.name ?? 'Nog niet toegewezen' }}</td>
-                <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk</RouterLink></td>
-                <td><RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink></td>
-                <td><button @click="deleteTicket(ticket.id)" style="cursor: pointer;">Verwijder</button></td>
-                <td><RouterLink :to="{ name: 'tickets.assign', params: { id: ticket.id } }">Toewijzen</RouterLink></td>
+                <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk ticket</RouterLink></td>
             </tr>
         </tbody>
     </table>
@@ -34,9 +31,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { deleteTicket, getTickets, Status, Ticket } from '../store';
+import { formatStatus, getTickets, Ticket } from '../store';
 import { getCategoryById } from '../../categories/store';
 import { getUserById } from '../../users/store';
+import { formatDate } from '../../../services/helpers';
 
 const sortKey = ref('created_at');
 const sortOrder = ref('desc');
@@ -65,14 +63,5 @@ const sortBy = (key: keyof Ticket) => {
 const getSortIcon = (key: keyof Ticket) => {
     if (sortKey.value !== key) return '';
     return sortOrder.value === 'asc' ? '↑' : '↓';
-}
-
-const formatDate = (date: Date) => {
-    let newDate = new Date(date);
-    return newDate.toLocaleDateString("nl-NL", {day: "2-digit", month: "2-digit", year: "numeric"}) + ' ' + newDate.toLocaleTimeString("nl-NL");
-}
-
-const formatStatus = (status: Status) => {
-    return status === Status.Open ? "In afwachting" : status === Status.InProgress ? "In behandeling" : "Afgehandeld";
 }
 </script>

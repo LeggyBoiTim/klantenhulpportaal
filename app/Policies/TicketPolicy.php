@@ -45,6 +45,16 @@ class TicketPolicy
     }
 
     /**
+     * Determine whether the user can assign the model.
+     */
+    public function assign(User $user, Ticket $ticket): Response
+    {
+        return $user->role === 'admin'
+            ? Response::allow()
+            : Response::denyWithStatus(403);
+    }
+
+    /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Ticket $ticket): Response

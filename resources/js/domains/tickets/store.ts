@@ -42,3 +42,8 @@ export const updateTicket = async (id: number, updatedTicket: Ticket) => {
 export const deleteTicket = async (id: number) => {
     await ticketStore.actions.delete(id);
 };
+
+// helpers
+export const formatStatus = (status: Status) => {
+    return status === Status.Open ? "In afwachting" : status === Status.InProgress ? "In behandeling" : "Afgehandeld";
+};
