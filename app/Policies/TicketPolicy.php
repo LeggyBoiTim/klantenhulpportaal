@@ -45,9 +45,9 @@ class TicketPolicy
     }
 
     /**
-     * Determine whether the user can assign the model.
+     * Determine whether the user can update the model.
      */
-    public function assign(User $user, Ticket $ticket): Response
+    public function updateAdminOnly(User $user, Ticket $ticket): Response
     {
         return $user->role === 'admin'
             ? Response::allow()

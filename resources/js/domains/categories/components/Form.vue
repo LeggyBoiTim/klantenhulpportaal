@@ -1,6 +1,10 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <button type="submit">Submit</button>
+        <label for="name">Naam:</label>
+        <input id="name" v-model="form.name" type="text" required />
+        <FormError name="name" />
+
+        <button type="submit">Opslaan</button>
     </form>
     
     <ErrorMessage />
@@ -9,6 +13,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ErrorMessage from '../../../ErrorMessage.vue';
+import FormError from '../../../FormError.vue';
 
 const props = defineProps({ category: Object });
 const emit = defineEmits(['submit']);

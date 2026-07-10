@@ -1,22 +1,27 @@
 import { storeModuleFactory } from '../../services/store';
+import { Item } from '../../types';
 
-const categoryStore = storeModuleFactory('categories');
+export interface Category extends Item {
+    name: string;
+}
+
+const categoryStore = storeModuleFactory<Category>('categories');
 
 categoryStore.actions.getAll();
 
 // getters
 export const getCategories = categoryStore.getters.all;
-export const getCategoryById = (id) => categoryStore.getters.byId(id);
+export const getCategoryById = (id: number) => categoryStore.getters.byId(id);
 
 // actions
-export const createCategory = async (newCategory) => {
+export const createCategory = async (newCategory: Category) => {
     await categoryStore.actions.create(newCategory);
 };
 
-export const updateCategory = async (id, updatedCategory) => {
+export const updateCategory = async (id: number, updatedCategory: Category) => {
     await categoryStore.actions.update(id, updatedCategory);
 };
 
-export const deleteCategory = async (id) => {
+export const deleteCategory = async (id: number) => {
     await categoryStore.actions.delete(id);
 };

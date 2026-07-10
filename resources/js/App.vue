@@ -1,8 +1,9 @@
 <template>
     <nav>
         <span v-if="currentUser">
-            <RouterLink to="/tickets/create">Nieuwe Ticket</RouterLink> | 
-            <RouterLink to="/tickets">Mijn Tickets</RouterLink> | 
+            <RouterLink to="/tickets/create">Nieuwe ticket</RouterLink> | 
+            <RouterLink to="/tickets">Mijn tickets</RouterLink> | 
+            <RouterLink to="/categories">Categorieën</RouterLink> |
             <RouterLink to="/me">Me</RouterLink> |
             <button @click="handleLogout" style="cursor: pointer;">Logout</button>
         </span> 

@@ -1,5 +1,5 @@
 <template>
-    <h1><b>Nieuwe Ticket</b></h1>
+    <h1><b>Ticket aanmaken</b></h1>
     <Form :ticket="ticket" @submit="handleSubmit" />
 </template>
 

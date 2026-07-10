@@ -2,8 +2,9 @@
     <h1><b>Details Ticket</b></h1><br>
     <h2><b>Titel:</b> {{ ticket.title }}</h2><br>
     <p><b>Beschrijving:</b><br>{{ ticket.content }}</p><br>
-    <p><b>Categorie:</b><br>{{ getCategoryById(ticket.category_id).value?.title }}</p><br>
+    <p><b>Categorie:</b> {{ getCategoryById(ticket.category_id).value?.name }}</p><br>
     <p><b>Status:</b> {{ formatStatus(ticket.status) }}</p><br>
+    <p><b>Toegewezen aan:</b> {{ ticket.assigned_id ? getUserById(ticket.assigned_id).value.name : 'Nog niet toegewezen' }}</p><br>
     <p><b>Laatst gewijzigd:</b> {{ formatDate(ticket.updated_at) }}</p><br>
     <p><b>Reacties:</b></p>
     <div v-if="!ticket.reactions.length">
@@ -15,9 +16,10 @@
         <br>
     </div>
     <p><b>Acties:</b></p>
-    <RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink>&nbsp;
-    <button @click="handleDelete" style="cursor: pointer;">Verwijder</button>&nbsp;
-    <RouterLink :to="{ name: 'tickets.assign', params: { id: ticket.id } }">Toewijzen</RouterLink>
+    <RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink>&nbsp;&nbsp;
+    <RouterLink :to="{ name: 'tickets.edit-assigned', params: { id: ticket.id } }">Wijs administrator toe</RouterLink>&nbsp;&nbsp;
+    <RouterLink :to="{ name: 'tickets.edit-status', params: { id: ticket.id } }">Wijzig status</RouterLink>&nbsp;&nbsp;
+    <button @click="handleDelete" style="cursor: pointer;">Verwijder</button>
 </template>
 
 <script setup lang="ts">

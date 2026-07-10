@@ -5,7 +5,7 @@
             <tr>
                 <th @click='sortBy("id")'>ID {{ getSortIcon('id') }}</th>
                 <th @click='sortBy("title")'>Titel {{ getSortIcon('title') }}</th>
-                <th @click='sortBy("category_id")'>Categorieën {{ getSortIcon('category_id') }}</th>
+                <th @click='sortBy("category_id")'>Categorie {{ getSortIcon('category_id') }}</th>
                 <th @click='sortBy("status")'>Status {{ getSortIcon('status') }}</th>
                 <th @click='sortBy("user_id")'>Aangemaakt door {{ getSortIcon('user_id') }}</th>
                 <th @click='sortBy("created_at")'>Aangemaakt op {{ getSortIcon('created_at') }}</th>
@@ -17,12 +17,12 @@
             <tr v-for="ticket in sortedTickets" :key="ticket.id">
                 <td style="text-align: right;">{{ ticket.id }}</td>
                 <td>{{ ticket.title }}</td>
-                <td>{{ getCategoryById(ticket.category_id).value?.title }}</td>
+                <td>{{ getCategoryById(ticket.category_id).value?.name }}</td>
                 <td>{{ formatStatus(ticket.status) }}</td>
                 <td>{{ getUserById(ticket.user_id).value?.name }}</td>
                 <td>{{ formatDate(ticket.created_at) }}</td>
                 <td>{{ formatDate(ticket.updated_at) }}</td>
-                <td>{{ getUserById(ticket.assigned_id).value?.name ?? 'Nog niet toegewezen' }}</td>
+                <td>{{ ticket.assigned_id ? getUserById(ticket.assigned_id).value.name : 'Nog niet toegewezen' }}</td>
                 <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk ticket</RouterLink></td>
             </tr>
         </tbody>

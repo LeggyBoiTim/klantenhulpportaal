@@ -27,6 +27,7 @@ class TicketRequest extends BaseFormRequest
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string', 'max:1000'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'status' => ['required', 'string', Rule::in(['open', 'in_progress', 'closed'])],
             'assigned_id' => ['sometimes', 'nullable', 'integer',
                 Rule::exists('users', 'id')->where(function (Builder $query) {
                     $query->where('role', 'admin');

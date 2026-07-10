@@ -5,32 +5,41 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
     public function index()
     {
+        Gate::authorize('viewAny');
+
         return CategoryResource::collection(Category::all());
     }
 
     public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->validated());
+        Gate::authorize('create');
 
-        $categories = Category::all();
-        return CategoryResource::collection($categories);
+        $data = $request->validated();
+
+        $category = Category::create($data);
+
+        return new CategoryResource($category);
     }
 
     public function update(CategoryRequest $request, Category $category)
     {
+        Gate::authorize('update', $category);
+
         $category->update($request->validated());
 
-        $categories = Category::all();
-        return CategoryResource::collection($categories);
+        return new CategoryResource($category);
     }
 
     public function destroy(Category $category)
     {
+        Gate::authorize('delete', $category);
+
         $category->delete();
         
         return response()->json(['message' => 'Categorie succesvol verwijderd']);
