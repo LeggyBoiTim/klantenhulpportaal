@@ -11,7 +11,7 @@
         <label for="category_id">Categorie:</label>
         <select id="category_id" v-model="form.category_id" required>
             <option v-for="category in categories" :key="category.id" :value="category.id">
-                {{ category.title }}
+                {{ category.name }}
             </option>
         </select>
         <FormError name="category_id" />

@@ -3,7 +3,9 @@
         <span v-if="currentUser">
             <RouterLink to="/tickets/create">Nieuwe ticket</RouterLink> | 
             <RouterLink to="/tickets">Mijn tickets</RouterLink> | 
-            <RouterLink to="/categories">Categorieën</RouterLink> |
+            <template v-if="isCurrentUserAdmin">
+                <RouterLink to="/categories">Categorieën</RouterLink> |
+            </template>
             <RouterLink to="/me">Me</RouterLink> |
             <button @click="handleLogout" style="cursor: pointer;">Logout</button>
         </span> 
@@ -14,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { deleteAuth, currentUser } from './domains/auth/store';
+import { deleteAuth, currentUser, isCurrentUserAdmin } from './domains/auth/store';
 import { RouterLink, useRouter} from 'vue-router';
 
 const router = useRouter();

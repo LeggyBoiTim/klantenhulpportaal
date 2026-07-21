@@ -11,8 +11,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        Gate::authorize('viewAny');
-
         return CategoryResource::collection(Category::all());
     }
 
