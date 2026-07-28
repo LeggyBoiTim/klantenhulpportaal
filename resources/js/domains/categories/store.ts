@@ -7,13 +7,15 @@ export interface Category extends Item {
 
 const categoryStore = storeModuleFactory<Category>('categories');
 
-categoryStore.actions.getAll();
-
 // getters
 export const getCategories = categoryStore.getters.all;
 export const getCategoryById = (id: number) => categoryStore.getters.byId(id);
 
 // actions
+export const fetchCategories = async () => {
+    await categoryStore.actions.getAll();
+}
+
 export const createCategory = async (newCategory: Category) => {
     await categoryStore.actions.create(newCategory);
 };

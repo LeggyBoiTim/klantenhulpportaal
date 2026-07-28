@@ -14,13 +14,15 @@ export interface User extends Item {
 
 const userStore = storeModuleFactory<User>('users');
 
-userStore.actions.getAll();
-
 // getters
 export const getUsers = userStore.getters.all;
 export const getUserById = (id: number) => userStore.getters.byId(id);
 
 // actions
+export const fetchUsers = async () => {
+    await userStore.actions.getAll();
+}
+
 export const createUser = async (newUser: User) => {
     await userStore.actions.create(newUser);
 };

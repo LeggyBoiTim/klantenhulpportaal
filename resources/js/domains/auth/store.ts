@@ -15,9 +15,7 @@ export const me = async () => {
     user.value = data;
 };
 
-me();
-
-export const createAuth = async (login) => {
+export const createAuth = async (login: unknown) => {
     const { data } = await postRequest('auth', login);
     if (!data) return;
     user.value = data.user;

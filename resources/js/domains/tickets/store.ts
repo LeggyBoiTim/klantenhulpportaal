@@ -20,17 +20,22 @@ export interface Ticket extends Item {
     updated_at: Date;
     reactions: Reaction[];
     notes: Note[];
+    assigned: string;
+    category: string;
+    user: string;
 }
 
 const ticketStore = storeModuleFactory<Ticket>('tickets');
-
-ticketStore.actions.getAll();
 
 // getters
 export const getTickets = ticketStore.getters.all;
 export const getTicketById = (id: number) => ticketStore.getters.byId(id);
 
 // actions
+export const fetchTickets = async () => {
+    await ticketStore.actions.getAll();
+}
+
 export const createTicket = async (newTicket: Ticket) => {
     await ticketStore.actions.create(newTicket);
 };

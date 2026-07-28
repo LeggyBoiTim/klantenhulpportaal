@@ -2,9 +2,9 @@
     <h1><b>Details Ticket</b></h1><br>
     <h2><b>Titel:</b> {{ ticket.title }}</h2><br>
     <p><b>Beschrijving:</b><br>{{ ticket.content }}</p><br>
-    <p><b>Categorie:</b> {{ getCategoryById(ticket.category_id).value?.name }}</p><br>
+    <p><b>Categorie:</b> {{ ticket.category }}</p><br>
     <p><b>Status:</b> {{ formatStatus(ticket.status) }}</p><br>
-    <p><b>Toegewezen aan:</b> {{ ticket.assigned_id ? getUserById(ticket.assigned_id).value.name : 'Nog niet toegewezen' }}</p><br>
+    <p><b>Toegewezen aan:</b> {{ ticket.assigned ? ticket.assigned : 'Nog niet toegewezen' }}</p><br>
     <p><b>Laatst gewijzigd:</b> {{ formatDate(ticket.updated_at) }}</p><br>
     <p><b>Reacties:</b></p>
     <div v-if="!ticket.reactions.length">
@@ -28,7 +28,6 @@ import { deleteTicket, formatStatus, getTicketById } from '../store';
 import { ref } from 'vue';
 import { getUserById } from '../../users/store';
 import { formatDate } from '../../../services/helpers';
-import { getCategoryById } from '../../categories/store';
 
 const route = useRoute()
 const router = useRouter();
