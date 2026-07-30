@@ -8,6 +8,6 @@ export const ticketRoutes =  [
     { path: '/tickets/create', component: Create, name: 'tickets.create' },
     { path: '/tickets/:id', component: Show, name: 'tickets.show' },
     { path: '/tickets/:id/edit', component: Edit, name: 'tickets.edit' },
-    { path: '/tickets/:id/edit-assigned', component: Edit, name: 'tickets.edit-assigned' },
-    { path: '/tickets/:id/edit-status', component: Edit, name: 'tickets.edit-status' },
+    { path: '/tickets/:id/edit-assigned', component: Edit, name: 'tickets.edit-assigned', meta: { requiresAdmin: true } },
+    { path: '/tickets/:id/edit-status', component: Edit, name: 'tickets.edit-status', meta: { requiresAdmin: true } },
 ];

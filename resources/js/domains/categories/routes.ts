@@ -4,8 +4,8 @@ import Overview from "./pages/Overview.vue";
 import Show from "./pages/Show.vue";
 
 export const categoryRoutes =  [
-    { path: '/categories', component: Overview, name: 'categories.overview' },
-    { path: '/categories/create', component: Create, name: 'categories.create' },
-    { path: '/categories/:id', component: Show, name: 'categories.show' },
-    { path: '/categories/:id/edit', component: Edit, name: 'categories.edit' },
+    { path: '/categories', component: Overview, name: 'categories.overview', meta: { requiresAdmin: true } },
+    { path: '/categories/create', component: Create, name: 'categories.create', meta: { requiresAdmin: true } },
+    { path: '/categories/:id', component: Show, name: 'categories.show', meta: { requiresAdmin: true } },
+    { path: '/categories/:id/edit', component: Edit, name: 'categories.edit', meta: { requiresAdmin: true } },
 ];

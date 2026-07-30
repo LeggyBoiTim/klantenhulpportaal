@@ -5,7 +5,7 @@ import { noteRoutes } from '../domains/notes/routes';
 import { reactionRoutes } from '../domains/reactions/routes';
 import { ticketRoutes } from '../domains/tickets/routes';
 import { userRoutes } from '../domains/users/routes';
-import { currentUser, me } from '../domains/auth/store';
+import { currentUser, isCurrentUserAdmin, me } from '../domains/auth/store';
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -24,11 +24,15 @@ router.beforeEach(async (to) => {
         await me().catch(() => {});
     }
 
-    if (!currentUser.value && to.name !== 'auth.login') {
+    if (to.name !== 'auth.login' && !currentUser.value) {
         return { name: 'auth.login' };
     }
 
-    if (currentUser.value && to.name === 'auth.login') {
+    if (to.name === 'auth.login' && currentUser.value) {
+        return { name: 'tickets.overview' };
+    }
+
+    if (to.meta.requiresAdmin && !isCurrentUserAdmin.value) {
         return { name: 'tickets.overview' };
     }
 
