@@ -18,9 +18,17 @@ class TicketController extends Controller
         return TicketResource::collection($tickets);
     }
 
+    public function show(Ticket $ticket)
+    {
+        Gate::authorize('view', $ticket);
+
+        return new TicketResource($ticket);
+    }
+
     public function store(TicketRequest $request)
     {
         $data = $request->validated();
+        
         $data['user_id'] = auth('sanctum')->user()->id;
 
         $ticket = Ticket::create($data);

@@ -12,8 +12,12 @@ export const getCategories = categoryStore.getters.all;
 export const getCategoryById = (id: number) => categoryStore.getters.byId(id);
 
 // actions
-export const fetchCategories = async () => {
+export const fetchAllCategories = async () => {
     await categoryStore.actions.getAll();
+}
+
+export const fetchCategory = async (id: number) => {
+    await categoryStore.actions.getById(id);
 }
 
 export const createCategory = async (newCategory: Category) => {

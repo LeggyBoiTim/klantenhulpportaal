@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Ticket;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TicketPolicy
 {
@@ -19,11 +18,9 @@ class TicketPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Ticket $ticket): Response
+    public function view(User $user, Ticket $ticket): bool
     {
-        return $user->role === 'admin' || $user->id === $ticket->user_id
-            ? Response::allow()
-            : Response::denyWithStatus(403);
+        return $user->role === 'admin' || $user->id === $ticket->user_id;
     }
 
     /**
@@ -37,31 +34,25 @@ class TicketPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Ticket $ticket): Response
+    public function update(User $user, Ticket $ticket): bool
     {
-        return $user->role === 'admin' || $user->id === $ticket->user_id
-            ? Response::allow()
-            : Response::denyWithStatus(403);
+        return $user->role === 'admin' || $user->id === $ticket->user_id;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function updateAdminOnly(User $user, Ticket $ticket): Response
+    public function updateAdminOnly(User $user, Ticket $ticket): bool
     {
-        return $user->role === 'admin'
-            ? Response::allow()
-            : Response::denyWithStatus(403);
+        return $user->role === 'admin';
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Ticket $ticket): Response
+    public function delete(User $user, Ticket $ticket): bool
     {
-        return $user->role === 'admin' || $user->id === $ticket->user_id
-            ? Response::allow()
-            : Response::denyWithStatus(403);
+        return $user->role === 'admin' || $user->id === $ticket->user_id;
     }
 
     /**

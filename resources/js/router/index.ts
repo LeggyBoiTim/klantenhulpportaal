@@ -20,21 +20,12 @@ export const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-    if (!currentUser.value) {
-        await me().catch(() => {});
-    }
+    if (!currentUser.value) {await me().catch(() => {});}
 
-    if (to.name !== 'auth.login' && !currentUser.value) {
-        return { name: 'auth.login' };
-    }
-
-    if (to.name === 'auth.login' && currentUser.value) {
-        return { name: 'tickets.overview' };
-    }
-
-    if (to.meta.requiresAdmin && !isCurrentUserAdmin.value) {
-        return { name: 'tickets.overview' };
-    }
+    if (to.name !== 'auth.login' && !currentUser.value) return { name: 'auth.login' };
+    if (to.name === 'auth.login' && currentUser.value) return { name: 'tickets.overview' };
+    if (to.meta.requiresAdmin && !isCurrentUserAdmin.value) return { name: 'tickets.overview' };
+    if (!to.name) return { name: 'tickets.overview' };
 
     return;
 });

@@ -31,10 +31,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { fetchTickets, formatStatus, getTickets, Ticket } from '../store';
+import { fetchAllTickets, formatStatus, getTickets, Ticket } from '../store';
 import { formatDate } from '../../../services/helpers';
 
-fetchTickets();
+fetchAllTickets();
 
 const sortKey = ref('created_at');
 const sortOrder = ref('desc');

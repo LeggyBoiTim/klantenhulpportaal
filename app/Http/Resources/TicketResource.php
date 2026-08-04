@@ -30,21 +30,6 @@ class TicketResource extends JsonResource
             'user' => $this->user->name,
             'assigned' => $this->assigned->name ?? '',
             'category' => $this->category->name,
-            'can' => $this->permissions(),
-        ];
-    }
-
-    /**
-     * Returns the permissions of the resource.
-     *
-     * @return array<string, mixed>
-     */
-    protected function permissions()
-    {
-        return [
-            'view' => Gate::allows('view', $this->resource),
-            'update' => Gate::allows('update', $this->resource),
-            'delete' => Gate::allows('delete', $this->resource),
         ];
     }
 }

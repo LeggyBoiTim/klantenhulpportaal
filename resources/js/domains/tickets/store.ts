@@ -32,8 +32,12 @@ export const getTickets = ticketStore.getters.all;
 export const getTicketById = (id: number) => ticketStore.getters.byId(id);
 
 // actions
-export const fetchTickets = async () => {
+export const fetchAllTickets = async () => {
     await ticketStore.actions.getAll();
+}
+
+export const fetchTicket = async (id: number) => {
+    await ticketStore.actions.getById(id);
 }
 
 export const createTicket = async (newTicket: Ticket) => {

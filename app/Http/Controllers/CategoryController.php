@@ -16,6 +16,13 @@ class CategoryController extends Controller
         return CategoryResource::collection(Category::all());
     }
 
+    public function show(Category $category)
+    {
+        Gate::authorize('view', $category);
+
+        return new CategoryResource($category);
+    }
+
     public function store(CategoryRequest $request)
     {
         Gate::authorize('create');

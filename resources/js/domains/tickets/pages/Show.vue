@@ -24,13 +24,15 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import { deleteTicket, formatStatus, getTicketById } from '../store';
+import { deleteTicket, fetchTicket, formatStatus, getTicketById } from '../store';
 import { ref } from 'vue';
 import { getUserById } from '../../users/store';
 import { formatDate } from '../../../services/helpers';
 
 const route = useRoute()
 const router = useRouter();
+
+fetchTicket(Number(route.params.id));
 
 const ticket = ref(getTicketById(Number(route.params.id)));
 

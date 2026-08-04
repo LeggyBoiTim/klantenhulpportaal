@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { Category, deleteCategory, fetchCategories, getCategories } from '../store';
+import { Category, deleteCategory, fetchAllCategories, getCategories } from '../store';
 
-fetchCategories();
+fetchAllCategories();
 
 const sortKey = ref('id');
 const sortOrder = ref('asc');
