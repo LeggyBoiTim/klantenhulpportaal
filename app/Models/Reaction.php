@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['ticket_id', 'content'])]
+#[Fillable(['ticket_id', 'user_id', 'content'])]
 class Reaction extends Model
 {
     /** @use HasFactory<ReactionFactory> */

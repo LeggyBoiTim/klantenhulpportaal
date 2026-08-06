@@ -23,9 +23,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getCategories } from '../../categories/store.js';
+import { fetchAllCategories, getCategories } from '../../categories/store.js';
 import ErrorMessage from '../../../ErrorMessage.vue';
 import FormError from '../../../FormError.vue';
+
+fetchAllCategories();
 
 const props = defineProps({ ticket: Object });
 const emit = defineEmits(['submit']);

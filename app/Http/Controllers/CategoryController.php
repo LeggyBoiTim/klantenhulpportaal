@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Category $category)
     {
-        Gate::authorize('viewAny');
+        Gate::authorize('viewAny', $category);
 
         return CategoryResource::collection(Category::all());
     }
@@ -23,9 +23,9 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request, Category $category)
     {
-        Gate::authorize('create');
+        Gate::authorize('create', $category);
 
         $data = $request->validated();
 

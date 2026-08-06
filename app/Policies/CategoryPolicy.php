@@ -8,23 +8,11 @@ use App\Models\User;
 class CategoryPolicy
 {
     /**
-     * Perform pre-authorization checks.
-     */
-    public function before(User $user, string $ability): bool|null
-    {
-        if ($user->role === 'admin') {
-            return true;
-        }
-    
-        return null;
-    }
-
-    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -32,7 +20,7 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -40,7 +28,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -48,7 +36,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -56,7 +44,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**

@@ -1,32 +1,34 @@
 <template>
-    <h1><b>Overzicht</b></h1>
-    <table>
-        <thead>
-            <tr>
-                <th @click='sortBy("id")'>ID {{ getSortIcon('id') }}</th>
-                <th @click='sortBy("title")'>Titel {{ getSortIcon('title') }}</th>
-                <th @click='sortBy("category")'>Categorie {{ getSortIcon('category_id') }}</th>
-                <th @click='sortBy("status")'>Status {{ getSortIcon('status') }}</th>
-                <th @click='sortBy("user")'>Aangemaakt door {{ getSortIcon('user_id') }}</th>
-                <th @click='sortBy("created_at")'>Aangemaakt op {{ getSortIcon('created_at') }}</th>
-                <th @click='sortBy("updated_at")'>Laatste update op {{ getSortIcon('updated_at') }}</th>
-                <th @click='sortBy("assigned")'>Toegewezen aan {{ getSortIcon('assigned_id') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="ticket in sortedTickets" :key="ticket.id">
-                <td style="text-align: right;">{{ ticket.id }}</td>
-                <td>{{ ticket.title }}</td>
-                <td>{{ ticket.category }}</td>
-                <td>{{ formatStatus(ticket.status) }}</td>
-                <td>{{ ticket.user }}</td>
-                <td>{{ formatDate(ticket.created_at) }}</td>
-                <td>{{ formatDate(ticket.updated_at) }}</td>
-                <td>{{ ticket.assigned ? ticket.assigned : 'Nog niet toegewezen' }}</td>
-                <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk ticket</RouterLink></td>
-            </tr>
-        </tbody>
-    </table>
+    <div v-if="sortedTickets">
+        <h1><b>Overzicht</b></h1>
+        <table>
+            <thead>
+                <tr>
+                    <th @click='sortBy("id")'>ID {{ getSortIcon('id') }}</th>
+                    <th @click='sortBy("title")'>Titel {{ getSortIcon('title') }}</th>
+                    <th @click='sortBy("category")'>Categorie {{ getSortIcon('category_id') }}</th>
+                    <th @click='sortBy("status")'>Status {{ getSortIcon('status') }}</th>
+                    <th @click='sortBy("user")'>Aangemaakt door {{ getSortIcon('user_id') }}</th>
+                    <th @click='sortBy("created_at")'>Aangemaakt op {{ getSortIcon('created_at') }}</th>
+                    <th @click='sortBy("updated_at")'>Laatste update op {{ getSortIcon('updated_at') }}</th>
+                    <th @click='sortBy("assigned")'>Toegewezen aan {{ getSortIcon('assigned_id') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="ticket in sortedTickets" :key="ticket.id">
+                    <td style="text-align: right;">{{ ticket.id }}</td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ ticket.category }}</td>
+                    <td>{{ formatStatus(ticket.status) }}</td>
+                    <td>{{ ticket.user }}</td>
+                    <td>{{ formatDate(ticket.created_at) }}</td>
+                    <td>{{ formatDate(ticket.updated_at) }}</td>
+                    <td>{{ ticket.assigned ? ticket.assigned : 'Nog niet toegewezen' }}</td>
+                    <td><RouterLink :to="{ name: 'tickets.show', params: { id: ticket.id } }">Bekijk ticket</RouterLink></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script setup lang="ts">

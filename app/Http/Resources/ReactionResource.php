@@ -14,6 +14,13 @@ class ReactionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'ticket_id' => $this->assigned_id,
+            'user_id' => $this->category_id,
+            'content' => $this->content,
+            'user' => $this->user->name,
+            'ticket' => $this->ticket->title,
+        ];
     }
 }
