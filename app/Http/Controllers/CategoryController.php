@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
     public function index(Category $category)
     {
-        Gate::authorize('viewAny', $category);
+        $categories = auth('sanctum')->user()->role === 'admin'
+            ? Category::all()
+            : Category::select(['id', 'name'])->get();
 
-        return CategoryResource::collection(Category::all());
+        return CategoryResource::collection($categories);
     }
 
     public function show(Category $category)
@@ -46,6 +49,12 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         Gate::authorize('delete', $category);
+
+        if ($category->tickets()->exists()) {
+            throw new HttpResponseException(response()->json([
+                'message' => 'Deze categorie kan niet worden verwijdered omdat er nog tickets aan gekoppeld zijn.'
+            ], 422));
+        }
 
         $category->delete();
         

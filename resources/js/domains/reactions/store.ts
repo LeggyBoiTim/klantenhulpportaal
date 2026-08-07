@@ -5,8 +5,8 @@ export interface Reaction extends Item {
     ticket_id: number;
     user_id: number;
     content: string;
-    ticket: string;
-    user: string;
+    ticket_title: string;
+    user_name: string;
 }
 
 const reactionStore = storeModuleFactory<Reaction>('reactions');

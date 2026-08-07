@@ -24,9 +24,9 @@ const ticket = ref<New<Ticket>>({
     updated_at: new Date,
     reactions: [],
     notes: [],
-    assigned: '',
-    category: '',
-    user: ''
+    assigned_name: '',
+    category_name: '',
+    user_name: ''
 });
 
 const handleSubmit = async (data: Ticket) => {

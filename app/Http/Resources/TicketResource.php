@@ -26,9 +26,9 @@ class TicketResource extends JsonResource
             'updated_at' => $this->updated_at,
             'reactions' => ReactionResource::collection($this->reactions),
             'notes' => NoteResource::collection($this->notes),
-            'user' => $this->user->name,
-            'assigned' => $this->assigned->name ?? '',
-            'category' => $this->category->name,
+            'user_name' => $this->user->name,
+            'assigned_name' => $this->assigned->name ?? '',
+            'category_name' => $this->category->name,
         ];
     }
 }
