@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Validation\Rule;
 
 class ReactionRequest extends BaseFormRequest
 {
@@ -22,6 +24,12 @@ class ReactionRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
+            'ticket_id' => ['required', 'integer', 'exists:tickets,id'],
+            'user_id' => ['required', 'integer',
+                Rule::exists('users', 'id')->where(function (Builder $query) {
+                    $query->where('role', 'admin');
+                })
+            ],
             'content' => ['required', 'string', 'max:500'],
         ];
     }

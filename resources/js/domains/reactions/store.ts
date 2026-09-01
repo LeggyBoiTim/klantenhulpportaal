@@ -11,13 +11,19 @@ export interface Reaction extends Item {
 
 const reactionStore = storeModuleFactory<Reaction>('reactions');
 
-reactionStore.actions.getAll();
-
 // getters
 export const getReactions = reactionStore.getters.all;
 export const getReactionById = (id: number) => reactionStore.getters.byId(id);
 
 // actions
+export const fetchAllReactions = async () => {
+    await reactionStore.actions.getAll();
+}
+
+export const fetchReaction = async (id: number) => {
+    await reactionStore.actions.getById(id);
+}
+
 export const createReaction = async (newReaction: Reaction) => {
     await reactionStore.actions.create(newReaction);
 };
