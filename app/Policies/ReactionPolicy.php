@@ -13,7 +13,7 @@ class ReactionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class ReactionPolicy
      */
     public function view(User $user, Reaction $reaction): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class ReactionPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role === 'admin'
     }
 
     /**
@@ -37,7 +37,7 @@ class ReactionPolicy
      */
     public function update(User $user, Reaction $reaction): bool
     {
-        return false;
+        return $user->role === 'admin'
     }
 
     /**
@@ -45,7 +45,7 @@ class ReactionPolicy
      */
     public function delete(User $user, Reaction $reaction): bool
     {
-        return false;
+        return $user->role === 'admin'
     }
 
     /**

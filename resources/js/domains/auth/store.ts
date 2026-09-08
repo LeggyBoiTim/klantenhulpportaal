@@ -5,8 +5,8 @@ const user = ref(null);
 
 // getters
 export const currentUser = computed(() => user.value);
-export const isCurrentUser = (id: number) => computed(() => user.value.id === id);
-export const isCurrentUserAdmin = computed(() => user.value.role === 'admin');
+export const isCurrentUser = (id: number) => computed(() => user.value?.id === id);
+export const isCurrentUserAdmin = computed(() => user.value?.role === 'admin');
 
 // actions
 export const me = async () => {

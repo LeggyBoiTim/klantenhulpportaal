@@ -9,7 +9,9 @@
         <p><b>Toegewezen aan:</b> {{ ticket.assigned_name ? ticket.assigned_name : 'Nog niet toegewezen' }}</p><br>
         <p><b>Laatst gewijzigd:</b> {{ formatDate(ticket.updated_at) }}</p><br>
         <p><b>Reacties:</b></p>
-        <Create /><br>
+        <div v-if="isCurrentUserAdmin">
+            <Create /><br>
+        </div>
         <div v-if="!ticket.reactions.length">
             <p>Er zijn nog geen reacties geplaatst.</p><br>
         </div>
@@ -29,7 +31,6 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { deleteTicket, fetchTicket, formatStatus, getTicketById } from '../store';
-import { ref } from 'vue';
 import { formatDate } from '../../../services/helpers/date';
 import { isCurrentUserAdmin } from '../../auth/store';
 import Create from '../../reactions/pages/Create.vue';
@@ -40,7 +41,7 @@ const ticketId = Number(route.params.id);
 
 fetchTicket(ticketId);
 
-const ticket = ref(getTicketById(ticketId));
+const ticket = getTicketById(ticketId);
 
 const handleDelete = async () => {
     const confirmation = confirm('Weet je zeker dat je deze ticket wilt verwijderen?');
