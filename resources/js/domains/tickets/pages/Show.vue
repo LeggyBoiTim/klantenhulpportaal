@@ -17,7 +17,14 @@
         </div>
         <div v-for="reaction in ticket.reactions" :key="reaction.id">
             <p style="font-style: italic;">{{ reaction.user_name }}:</p>
-            <p>{{ reaction.content }}</p>
+            <div v-if="editing !== reaction.id">
+                <p>{{ reaction.content }}</p>
+                <button @click="changeEditing(reaction.id)" style="cursor: pointer;">Bewerk</button>
+            </div>
+            <div v-else>
+                <Edit :id="reaction.id"/>
+                <button @click="changeEditing(0)" style="cursor: pointer;">Annuleer</button>
+            </div>
             <br>
         </div>
         <p><b>Acties:</b></p>
@@ -34,6 +41,8 @@ import { deleteTicket, fetchTicket, formatStatus, getTicketById } from '../store
 import { formatDate } from '../../../services/helpers/date';
 import { isCurrentUserAdmin } from '../../auth/store';
 import Create from '../../reactions/pages/Create.vue';
+import Edit from '../../reactions/pages/Edit.vue';
+import { ref } from 'vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -43,10 +52,16 @@ fetchTicket(ticketId);
 
 const ticket = getTicketById(ticketId);
 
+const editing = ref(0);
+
 const handleDelete = async () => {
     const confirmation = confirm('Weet je zeker dat je deze ticket wilt verwijderen?');
     if (!confirmation) return;
     await deleteTicket(ticket.value.id);
     router.push({ name: 'tickets.overview' });
-};
+}
+
+const changeEditing = (id: number) => {
+    editing.value = id;
+}
 </script>

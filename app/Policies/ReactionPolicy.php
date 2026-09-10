@@ -29,7 +29,7 @@ class ReactionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin'
+        return $user->role === 'admin';
     }
 
     /**
@@ -37,7 +37,7 @@ class ReactionPolicy
      */
     public function update(User $user, Reaction $reaction): bool
     {
-        return $user->role === 'admin'
+        return $user->role === 'admin';
     }
 
     /**
@@ -45,7 +45,7 @@ class ReactionPolicy
      */
     public function delete(User $user, Reaction $reaction): bool
     {
-        return $user->role === 'admin'
+        return $user->role === 'admin';
     }
 
     /**

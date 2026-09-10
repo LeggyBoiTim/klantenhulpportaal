@@ -25,5 +25,5 @@ const reaction = ref<New<Reaction>>({
 const handleSubmit = async (data: Reaction) => {
     await createReaction(data);
     router.push({ name: 'tickets.show', params: { id: data.ticket_id } });
-};
+}
 </script>

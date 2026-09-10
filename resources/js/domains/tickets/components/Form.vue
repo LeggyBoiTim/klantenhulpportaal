@@ -15,6 +15,7 @@
             </option>
         </select>
         <FormError name="category_id" />
+        
         <button type="submit">Opslaan</button>
     </form>
     
