@@ -6,13 +6,26 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Updatable } from '../../../services/store';
-import { getReactionById, Reaction, updateReaction } from '../store';
+import { getReactionById, Reaction, reactionStore, updateReaction } from '../store';
 import EditForm from '../components/EditForm.vue';
 
 const router = useRouter();
 const props = defineProps({ id: Number });
 
-const reaction = ref<Updatable<Reaction>>(getReactionById(Number(props.id)).value);
+// fetchReaction(Number(props.id));
+
+const reaction = ref();
+
+const fetchReaction = async (id) => {
+    await reactionStore.actions.getById(id);
+    reaction.value = reactionStore.getters.byId(id);
+}
+
+fetchReaction(Number(props.id));
+
+console.log(reaction.value);
+
+// console.log(getReactionById(Number(props.id)).value);
 
 const handleSubmit = async (data: Reaction) => {
     await updateReaction(Number(props.id), data);

@@ -9,7 +9,7 @@ export interface Reaction extends Item {
     user_name: string;
 }
 
-const reactionStore = storeModuleFactory<Reaction>('reactions');
+export const reactionStore = storeModuleFactory<Reaction>('reactions');
 
 // getters
 export const getReactions = reactionStore.getters.all;

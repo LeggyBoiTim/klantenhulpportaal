@@ -25,6 +25,8 @@ class ReactionController extends Controller
 
     public function store(ReactionRequest $request)
     {
+        Gate::authorize('create', Reaction::class);
+
         $data = $request->validated();
 
         $reaction = Reaction::create($data);

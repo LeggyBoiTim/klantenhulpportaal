@@ -26,9 +26,9 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function store(CategoryRequest $request, Category $category)
+    public function store(CategoryRequest $request)
     {
-        Gate::authorize('create', $category);
+        Gate::authorize('create', Category::class);
 
         $data = $request->validated();
 
