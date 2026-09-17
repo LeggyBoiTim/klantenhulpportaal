@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <label for="content"></label>
-        <input id="content" v-model="form.content" type="text" required autofocus/>
+        <label for={{ form.id }}><i>{{ form.user_name }}:</i></label><br>
+        <input id={{ form.id }} v-model="form.content" type="text" required autofocus/>
         <FormError name="content" /><br>
 
         <button type="submit" style="cursor: pointer;">Wijzig reactie</button>&nbsp;&nbsp;

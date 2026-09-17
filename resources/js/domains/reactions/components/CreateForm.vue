@@ -1,10 +1,10 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <label for="content">Beschrijving:</label>
+        <label for="content"><i>Nieuwe reactie:</i></label><br>
         <input id="content" v-model="form.content" type="text" required />
-        <FormError name="content" />
+        <FormError name="content" /><br>
 
-        <button type="submit">Plaats reactie</button>
+        <button type="submit" style="cursor: pointer;">Plaats reactie</button>
     </form>
     
     <ErrorMessage />

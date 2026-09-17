@@ -16,12 +16,12 @@
             <p>Er zijn nog geen reacties geplaatst.</p><br>
         </div>
         <div v-for="reaction in ticket.reactions" :key="reaction.id">
-            <p style="font-style: italic;">{{ reaction.user_name }}:</p>
-            <div v-show="editing !== reaction.id">
+            <div v-if="editing !== reaction.id">
+                <p><i>{{ reaction.user_name }}:</i></p>
                 <p>{{ reaction.content }}</p>
                 <button @click="changeEditing(reaction.id)" style="cursor: pointer;">Bewerk</button>
             </div>
-            <div v-show="editing === reaction.id">
+            <div v-else>
                 <EditForm :reaction="<Updatable<Reaction>>reaction" @submit="handleUpdateReaction" @cancel="changeEditing(0)"/>
             </div>
             <br>
