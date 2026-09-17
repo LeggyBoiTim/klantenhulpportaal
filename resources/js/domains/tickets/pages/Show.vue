@@ -10,20 +10,19 @@
         <p><b>Laatst gewijzigd:</b> {{ formatDate(ticket.updated_at) }}</p><br>
         <p><b>Reacties:</b></p>
         <div v-if="isCurrentUserAdmin">
-            <Create /><br>
+            <CreateForm :reaction="newReaction" @submit="handleCreateReaction" /><br>
         </div>
         <div v-if="!ticket.reactions.length">
             <p>Er zijn nog geen reacties geplaatst.</p><br>
         </div>
         <div v-for="reaction in ticket.reactions" :key="reaction.id">
             <p style="font-style: italic;">{{ reaction.user_name }}:</p>
-            <div v-if="editing !== reaction.id">
+            <div v-show="editing !== reaction.id">
                 <p>{{ reaction.content }}</p>
                 <button @click="changeEditing(reaction.id)" style="cursor: pointer;">Bewerk</button>
             </div>
-            <div v-else>
-                <Edit :id="reaction.id"/>
-                <button @click="changeEditing(0)" style="cursor: pointer;">Annuleer</button>
+            <div v-show="editing === reaction.id">
+                <EditForm :reaction="<Updatable<Reaction>>reaction" @submit="handleUpdateReaction" @cancel="changeEditing(0)"/>
             </div>
             <br>
         </div>
@@ -31,7 +30,7 @@
         <RouterLink :to="{ name: 'tickets.edit', params: { id: ticket.id } }">Bewerk</RouterLink>&nbsp;&nbsp;
         <span v-if="isCurrentUserAdmin"><RouterLink :to="{ name: 'tickets.edit-assigned', params: { id: ticket.id } }">Wijs administrator toe</RouterLink>&nbsp;&nbsp;</span>
         <span v-if="isCurrentUserAdmin"><RouterLink :to="{ name: 'tickets.edit-status', params: { id: ticket.id } }">Wijzig status</RouterLink>&nbsp;&nbsp;</span>
-        <button @click="handleDelete" style="cursor: pointer;">Verwijder</button>
+        <button @click="handleDeleteTicket" style="cursor: pointer;">Verwijder</button>
     </div>
 </template>
 
@@ -39,27 +38,45 @@
 import { useRoute, useRouter } from 'vue-router';
 import { deleteTicket, fetchTicket, formatStatus, getTicketById } from '../store';
 import { formatDate } from '../../../services/helpers/date';
-import { isCurrentUserAdmin } from '../../auth/store';
-import Create from '../../reactions/pages/Create.vue';
-import Edit from '../../reactions/pages/Edit.vue';
+import { currentUser, isCurrentUserAdmin } from '../../auth/store';
 import { ref } from 'vue';
+import { New, Updatable } from '../../../services/store';
+import { createReaction, Reaction, updateReaction } from '../../reactions/store';
+import CreateForm from '../../reactions/components/CreateForm.vue';
+import EditForm from '../../reactions/components/EditForm.vue';
 
 const route = useRoute();
 const router = useRouter();
-const ticketId = Number(route.params.id);
-
-fetchTicket(ticketId);
-
-const ticket = getTicketById(ticketId);
-
+const ticket = getTicketById(Number(route.params.id));
 const editing = ref(0);
 
-const handleDelete = async () => {
+fetchTicket(Number(route.params.id));
+
+const newReaction = ref<New<Reaction>>({
+    ticket_id: Number(route.params.id),
+    user_id: currentUser.value?.id,
+    content: '',
+    user_name: '',
+    ticket_title: ''
+});
+
+const handleDeleteTicket = async () => {
     const confirmation = confirm('Weet je zeker dat je deze ticket wilt verwijderen?');
     if (!confirmation) return;
     await deleteTicket(ticket.value.id);
     router.push({ name: 'tickets.overview' });
 }
+
+const handleCreateReaction = async (data: Reaction) => {
+    await createReaction(data);
+    await fetchTicket(data.ticket_id);
+}
+
+const handleUpdateReaction = async (data: Reaction) => {
+    await updateReaction(data.id, data);
+    await fetchTicket(data.ticket_id);
+    editing.value = 0;
+};
 
 const changeEditing = (id: number) => {
     editing.value = id;
