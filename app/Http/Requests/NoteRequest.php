@@ -22,6 +22,8 @@ class NoteRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
+            'ticket_id' => ['required', 'integer', 'exists:tickets,id'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
             'content' => ['required', 'string', 'max:500'],
         ];
     }

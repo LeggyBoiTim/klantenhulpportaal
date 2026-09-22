@@ -14,6 +14,8 @@ class TicketResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $isAdmin = $request->user()->role === 'admin';
+
         return [
             'id' => $this->id,
             'assigned_id' => $this->assigned_id,
@@ -25,7 +27,7 @@ class TicketResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'reactions' => ReactionResource::collection($this->reactions),
-            'notes' => NoteResource::collection($this->notes),
+            'notes' => $this->when($isAdmin, NoteResource::collection($this->notes)),
             'user_name' => $this->user->name,
             'assigned_name' => $this->assigned->name ?? '',
             'category_name' => $this->category->name,

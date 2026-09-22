@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -17,6 +18,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+    
+    Route::get('/notes', [NoteController::class, 'index']);
+    Route::get('/notes/{note}', [NoteController::class, 'show']);
+    Route::post('/notes', [NoteController::class, 'store']);
+    Route::put('/notes/{note}', [NoteController::class, 'update']);
+    Route::delete('/notes/{note}', [NoteController::class, 'destroy']);
 
     Route::get('/reactions', [ReactionController::class, 'index']);
     Route::get('/reactions/{reaction}', [ReactionController::class, 'show']);

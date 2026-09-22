@@ -19,9 +19,11 @@ class NoteFactory extends Factory
      */
     public function definition(): array
     {
+        $ticket = Ticket::inRandomOrder()->first();
+
         return [
-            'ticket_id' => Ticket::inRandomOrder()->first()->id,
-            'user_id' => User::where('role', 'admin')->inRandomOrder()->first()->id,
+            'ticket_id' => $ticket->id,
+            'user_id' => $ticket->user_id,
             'content' => fake()->sentence(),
         ];
     }
