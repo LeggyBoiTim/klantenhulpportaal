@@ -4,14 +4,14 @@
         <table>
             <thead>
                 <tr>
-                    <th @click='sortBy("id")'>ID {{ getSortIcon('id') }}</th>
-                    <th @click='sortBy("title")'>Titel {{ getSortIcon('title') }}</th>
-                    <th @click='sortBy("category_name")'>Categorie {{ getSortIcon('category_name') }}</th>
-                    <th @click='sortBy("status")'>Status {{ getSortIcon('status') }}</th>
-                    <th @click='sortBy("user_name")'>Aangemaakt door {{ getSortIcon('user_name') }}</th>
-                    <th @click='sortBy("created_at")'>Aangemaakt op {{ getSortIcon('created_at') }}</th>
-                    <th @click='sortBy("updated_at")'>Laatste update op {{ getSortIcon('updated_at') }}</th>
-                    <th @click='sortBy("assigned_name")'>Toegewezen aan {{ getSortIcon('assigned_name') }}</th>
+                    <th @click="sortBy('id')" style="cursor: pointer;">ID {{ getSortIcon('id') }}</th>
+                    <th @click="sortBy('title')" style="cursor: pointer;">Titel {{ getSortIcon('title') }}</th>
+                    <th @click="sortBy('category_name')" style="cursor: pointer;">Categorie {{ getSortIcon('category_name') }}</th>
+                    <th @click="sortBy('status')" style="cursor: pointer;">Status {{ getSortIcon('status') }}</th>
+                    <th @click="sortBy('user_name')" style="cursor: pointer;">Aangemaakt door {{ getSortIcon('user_name') }}</th>
+                    <th @click="sortBy('created_at')" style="cursor: pointer;">Aangemaakt op {{ getSortIcon('created_at') }}</th>
+                    <th @click="sortBy('updated_at')" style="cursor: pointer;">Laatste update op {{ getSortIcon('updated_at') }}</th>
+                    <th @click="sortBy('assigned_name')" style="cursor: pointer;">Toegewezen aan {{ getSortIcon('assigned_name') }}</th>
                 </tr>
             </thead>
             <tbody>

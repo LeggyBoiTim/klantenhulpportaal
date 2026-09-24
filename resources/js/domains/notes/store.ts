@@ -5,17 +5,24 @@ export interface Note extends Item {
     ticket_id: number;
     user_id: number;
     content: string;
+    created_at: Date;
 }
 
-const noteStore = storeModuleFactory<Note>('notes');
-
-noteStore.actions.getAll();
+export const noteStore = storeModuleFactory<Note>('notes');
 
 // getters
 export const getNotes = noteStore.getters.all;
 export const getNoteById = (id: number) => noteStore.getters.byId(id);
 
 // actions
+export const fetchAllNotes = async () => {
+    await noteStore.actions.getAll();
+}
+
+export const fetchNote = async (id: number) => {
+    await noteStore.actions.getById(id);
+}
+
 export const createNote = async (newNote: Note) => {
     await noteStore.actions.create(newNote);
 };

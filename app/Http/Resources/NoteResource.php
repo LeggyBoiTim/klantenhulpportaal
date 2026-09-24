@@ -19,8 +19,7 @@ class NoteResource extends JsonResource
             'ticket_id' => $this->ticket_id,
             'user_id' => $this->user_id,
             'content' => $this->content,
-            'user_name' => $this->user->name,
-            'ticket_title' => $this->ticket->title,
+            'created_at' => $this->created_at,
         ];
     }
 }
