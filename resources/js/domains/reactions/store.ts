@@ -5,7 +5,8 @@ export interface Reaction extends Item {
     ticket_id: number;
     user_id: number;
     content: string;
-    user_name: string;
+    user_first_name: string;
+    user_last_name: string;
     created_at: Date;
 }
 

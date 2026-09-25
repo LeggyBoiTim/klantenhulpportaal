@@ -22,16 +22,14 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        $users = User::all();
-        return UserResource::collection($users);
+        return new UserResource($user);
     }
 
     public function update(UserRequest $request, User $user)
     {
         $user->update($request->validated());
 
-        $users = User::all();
-        return UserResource::collection($users);
+        return new UserResource($user);
     }
 
     public function destroy(User $user)

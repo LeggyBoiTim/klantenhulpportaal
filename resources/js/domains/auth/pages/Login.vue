@@ -16,7 +16,7 @@ const user = ref({
     password: '',
 });
 
-const handleSubmit = async (data) => {
+const handleSubmit = async (data: unknown) => {
     await createAuth(data);
     router.push({ name: 'tickets.overview' });
 }

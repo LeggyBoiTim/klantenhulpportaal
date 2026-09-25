@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <label for={{ form.id }}><i>{{ form.user_name }}:</i></label><br>
+        <label for={{ form.id }}><i>{{ form.user_first_name }} {{ form.user_last_name }} op {{ formatDate(form.created_at) }}:</i></label><br>
         <input id={{ form.id }} v-model="form.content" type="text" required autofocus/>
         <FormError name="content" /><br>
 
@@ -15,6 +15,7 @@
 import { ref } from 'vue';
 import ErrorMessage from '../../../ErrorMessage.vue';
 import FormError from '../../../FormError.vue';
+import { formatDate } from '../../../services/helpers/date.js';
 
 const props = defineProps({ reaction: Object });
 const emit = defineEmits(['submit', 'cancel']);

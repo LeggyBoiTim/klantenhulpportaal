@@ -1,7 +1,8 @@
 <template>
     <div v-if="currentUser">
-        <p>Name: {{ currentUser.name || 'N/A' }}</p>
-        <p>Email: {{ currentUser.email || 'N/A' }}</p>
+        <p>Voornaam: {{ currentUser.first_name || 'N/A' }}</p>
+        <p>Achternaam: {{ currentUser.last_name || 'N/A' }}</p>
+        <p>E-mail: {{ currentUser.email || 'N/A' }}</p>
     </div>
 </template>
 

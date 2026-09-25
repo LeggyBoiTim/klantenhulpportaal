@@ -19,7 +19,8 @@ class ReactionResource extends JsonResource
             'ticket_id' => $this->ticket_id,
             'user_id' => $this->user_id,
             'content' => $this->content,
-            'user_name' => $this->user->name,
+            'user_first_name' => $this->user->first_name,
+            'user_last_name' => $this->user->last_name,
             'created_at' => $this->created_at,
         ];
     }

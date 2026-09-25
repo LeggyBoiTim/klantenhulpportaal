@@ -28,8 +28,10 @@ class TicketResource extends JsonResource
             'updated_at' => $this->updated_at,
             'reactions' => ReactionResource::collection($this->reactions),
             'notes' => $this->when($isAdmin, NoteResource::collection($this->notes)),
-            'user_name' => $this->user->name,
-            'assigned_name' => $this->assigned->name ?? '',
+            'user_first_name' => $this->user->first_name,
+            'user_last_name' => $this->user->last_name,
+            'assigned_first_name' => $this->assigned->first_name ?? '',
+            'assigned_last_name' => $this->assigned->last_name ?? '',
             'category_name' => $this->category->name,
         ];
     }

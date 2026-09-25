@@ -20,9 +20,11 @@ export interface Ticket extends Item {
     updated_at: Date;
     reactions: Reaction[];
     notes: Note[];
-    assigned_name: string;
+    user_first_name: string;
+    user_last_name: string;
+    assigned_first_name: string;
+    assigned_last_name: string;
     category_name: string;
-    user_name: string;
 }
 
 const ticketStore = storeModuleFactory<Ticket>('tickets');

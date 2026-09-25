@@ -24,8 +24,10 @@ class RegisterRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'email', 'string', 'max:255', 'unique:users'],
+            'first_name' => ['required', 'string', 'max:50'],
+            'last_name' => ['required', 'string', 'max:50'],
+            'phone_number' => ['required', 'string', 'regex:/^\\+?[1-9][0-9]{7,14}$/'],
             'password' => ['required', 'string', Password::defaults()],
             'password_confirmation' => ['required', 'string', 'same:password'],
         ];

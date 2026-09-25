@@ -3,11 +3,11 @@
         <div>
             <h1><b>Details Ticket</b></h1><br>
             <h2><b>Titel:</b> {{ ticket.title }}</h2><br>
-            <p><b>Gebruiker:</b> {{ ticket.user_name }}</p><br>
+            <p><b>Gebruiker:</b> {{ ticket.user_first_name }} {{ ticket.user_last_name }}</p><br>
             <p><b>Beschrijving:</b><br>{{ ticket.content }}</p><br>
             <p><b>Categorie:</b> {{ ticket.category_name }}</p><br>
             <p><b>Status:</b> {{ formatStatus(ticket.status) }}</p><br>
-            <p><b>Toegewezen aan:</b> {{ ticket.assigned_name ? ticket.assigned_name : 'Nog niet toegewezen' }}</p><br>
+            <p><b>Toegewezen aan:</b> {{ ticket.assigned_last_name ? ticket.assigned_first_name.concat(' ', ticket.assigned_last_name) : 'Nog niet toegewezen' }}</p><br>
             <p><b>Laatst gewijzigd:</b> {{ formatDate(ticket.updated_at) }}</p><br>
         </div>
         <div>
@@ -20,7 +20,7 @@
             </div>
             <div v-for="reaction in sortedReactions" :key="reaction.id">
                 <div v-if="editing !== reaction.id">
-                    <p><i>{{ reaction.user_name }} op {{ formatDate(reaction.created_at) }}:</i></p>
+                    <p><i>{{ reaction.user_first_name }} {{ reaction.user_last_name }} op {{ formatDate(reaction.created_at) }}:</i></p>
                     <p>{{ reaction.content }}</p>
                     <button v-if="isCurrentUserAdmin" @click="changeEditing(reaction.id)" style="cursor: pointer;">Bewerk</button>&nbsp;&nbsp;
                     <button @click="handleDeleteReaction(reaction.id)" style="cursor: pointer;">Verwijder</button>
@@ -88,15 +88,16 @@ fetchTicket(Number(route.params.id));
 
 const newReaction = ref<New<Reaction>>({
     ticket_id: Number(route.params.id),
-    user_id: currentUser.value?.id,
+    user_id: currentUser.value!.id,
     content: '',
-    user_name: '',
+    user_first_name: '',
+    user_last_name: '',
     created_at: new Date
 });
 
 const newNote = ref<New<Note>>({
     ticket_id: Number(route.params.id),
-    user_id: currentUser.value?.id, // <--- This needs to become the ticket's user's id instead of the current user's id.
+    user_id: currentUser.value!.id, // <--- This needs to become the ticket's user's id instead of the current user's id.
     content: '',
     created_at: new Date
 });
