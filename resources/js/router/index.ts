@@ -20,8 +20,9 @@ export const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
+    await me().catch(() => {});
+    
     if (to.name !== 'auth.login' && !currentUser.value) {
-        await me().catch(() => {});
         return { name: 'auth.login' };
     }
     if (to.name === 'auth.login' && currentUser.value) return { name: 'tickets.overview' };

@@ -1,14 +1,14 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <label for="status">Status:</label>
+        <label for="status">Status: </label>
         <select id="status" v-model="form.status" required>
             <option v-for="status in statuses" :key="status" :value="status">
                 {{ formatStatus(status) }}
             </option>
         </select>
         <FormError name="status" />
-
-        <button type="submit">Opslaan</button>
+        <br><br>
+        <button type="submit" style="cursor: pointer;">Opslaan</button>
     </form>
     
     <ErrorMessage />

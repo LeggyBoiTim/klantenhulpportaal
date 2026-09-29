@@ -1,12 +1,12 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <label for="email">Email</label>
+        <label for="email">Email: </label>
         <input type="email" id="email" v-model="form.email" required/>
-
-        <label for="password">Password</label>
+        <br>
+        <label for="password">Password: </label>
         <input type="password" id="password" v-model="form.password" required/>
-
-        <button type="submit">Login</button>
+        <br><br>
+        <button type="submit" style="cursor: pointer;">Login</button>
     </form>
     
     <ErrorMessage />

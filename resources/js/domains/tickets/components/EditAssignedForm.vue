@@ -1,16 +1,16 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <label for="assigned_id">Administrator:</label>
+        <label for="assigned_id">Administrator: </label>
         <select id="assigned_id" v-model="form.assigned_id" required>
             <option v-for="user in users" :key="user.id" :value="user.id">
                 {{ user.name }}
             </option>
         </select>
         <FormError name="assigned_id" />
-
-        <button type="submit">Opslaan</button>
+        <br><br>
+        <button type="submit" style="cursor: pointer;">Opslaan</button>
     </form>
-    
+    <br><br>
     <ErrorMessage />
 </template>
 

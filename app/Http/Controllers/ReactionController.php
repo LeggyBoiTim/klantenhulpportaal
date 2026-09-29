@@ -16,13 +16,6 @@ class ReactionController extends Controller
         return ReactionResource::collection(Reaction::all());
     }
 
-    public function show(Reaction $reaction)
-    {
-        Gate::authorize('view', $reaction);
-
-        return new ReactionResource($reaction);
-    }
-
     public function store(ReactionRequest $request)
     {
         Gate::authorize('create', Reaction::class);

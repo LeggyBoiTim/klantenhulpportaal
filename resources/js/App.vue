@@ -5,9 +5,10 @@
             <RouterLink to="/tickets">Mijn tickets</RouterLink> | 
             <template v-if="isCurrentUserAdmin">
                 <RouterLink to="/categories">Categorieën</RouterLink> |
+                <RouterLink to="/users">Gebruikers</RouterLink> |
             </template>
             <RouterLink to="/me">Me</RouterLink> |
-            <button @click="handleLogout" style="cursor: pointer;">Logout</button>
+            <button @click="handleLogout" style="cursor: pointer;">Log Uit</button>
         </span> 
         <RouterLink v-else to="/login">Login</RouterLink>
     </nav>

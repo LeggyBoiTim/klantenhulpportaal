@@ -16,7 +16,7 @@ const router = useRouter();
 const ticket = ref<New<Ticket>>({
     assigned_id: null,
     category_id: 1,
-    user_id: currentUser.value?.id,
+    user_id: currentUser.value!.id,
     title: '',
     content: '',
     status: Status.Open,
@@ -24,9 +24,11 @@ const ticket = ref<New<Ticket>>({
     updated_at: new Date,
     reactions: [],
     notes: [],
-    assigned_name: '',
-    category_name: '',
-    user_name: ''
+    user_first_name: '',
+    user_last_name: '',
+    assigned_first_name: '',
+    assigned_last_name: '',
+    category_name: ''
 });
 
 const handleSubmit = async (data: Ticket) => {

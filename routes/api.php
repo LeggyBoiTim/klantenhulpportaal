@@ -14,19 +14,16 @@ Route::delete('/auth', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
-    Route::get('/categories/{category}', [CategoryController::class, 'show']);
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
     
     Route::get('/notes', [NoteController::class, 'index']);
-    Route::get('/notes/{note}', [NoteController::class, 'show']);
     Route::post('/notes', [NoteController::class, 'store']);
     Route::put('/notes/{note}', [NoteController::class, 'update']);
     Route::delete('/notes/{note}', [NoteController::class, 'destroy']);
 
     Route::get('/reactions', [ReactionController::class, 'index']);
-    Route::get('/reactions/{reaction}', [ReactionController::class, 'show']);
     Route::post('/reactions', [ReactionController::class, 'store']);
     Route::put('/reactions/{reaction}', [ReactionController::class, 'update']);
     Route::delete('/reactions/{reaction}', [ReactionController::class, 'destroy']);
@@ -38,7 +35,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy']);
 
     Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/{user}', [UserController::class, 'show']);
     Route::post('/users', [UserController::class, 'store']);
     Route::put('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);

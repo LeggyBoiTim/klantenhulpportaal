@@ -1,22 +1,22 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <label for="title">Titel:</label>
+        <label for="title">Titel: </label>
         <input id="title" v-model="form.title" type="text" required />
         <FormError name="title" />
-
-        <label for="content">Beschrijving:</label>
+        <br>
+        <label for="content">Beschrijving: </label>
         <input id="content" v-model="form.content" type="text" required />
         <FormError name="content" />
-
-        <label for="category_id">Categorie:</label>
+        <br>
+        <label for="category_id">Categorie: </label>
         <select id="category_id" v-model="form.category_id" required>
             <option v-for="category in categories" :key="category.id" :value="category.id">
                 {{ category.name }}
             </option>
         </select>
         <FormError name="category_id" />
-        
-        <button type="submit">Opslaan</button>
+        <br><br>
+        <button type="submit" style="cursor: pointer;">Opslaan</button>
     </form>
     
     <ErrorMessage />

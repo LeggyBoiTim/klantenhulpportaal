@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
-    public function index(Category $category)
+    public function index()
     {
         $categories = auth('sanctum')->user()->role === 'admin'
             ? Category::all()

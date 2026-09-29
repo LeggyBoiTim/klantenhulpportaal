@@ -11,16 +11,11 @@ class NoteController extends Controller
 {
     public function index()
     {
+        Gate::authorize('viewAny', Note::class);
+
         return NoteResource::collection(Note::all());
     }
-
-    public function show(Note $note)
-    {
-        Gate::authorize('view', $note);
-
-        return new NoteResource($note);
-    }
-
+    
     public function store(NoteRequest $request)
     {
         Gate::authorize('create', Note::class);

@@ -23,7 +23,7 @@ class UserRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'email', 'string', 'max:255', Rule::unique('users', 'email')->ignore($this->route('user'))],
             'first_name' => ['required', 'string', 'max:50'],
             'last_name' => ['required', 'string', 'max:50'],
             'phone_number' => ['required', 'string', 'regex:/^\\+?[1-9][0-9]{7,14}$/'],
