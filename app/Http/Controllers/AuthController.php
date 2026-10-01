@@ -32,4 +32,24 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return response()->json(['message' => 'Je bent succesvol uitgelogd.']);
     }
+
+    public function passwordRequest()
+    {
+        //
+    }
+
+    public function passwordEmail(Request $request)
+    {
+        //
+    }
+
+    public function passwordReset(string $token)
+    {
+        //
+    }
+
+    public function passwordUpdate(Request $request)
+    {
+        //
+    }
 }

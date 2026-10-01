@@ -8,11 +8,18 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
-Route::post('/auth', [AuthController::class, 'login']);
-Route::delete('/auth', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::middleware('guest')->group(function () {
+    Route::post('/auth', [AuthController::class, 'login']);
+    Route::get('/forgot-password', [AuthController::class, 'passwordRequest']);
+    Route::post('/forgot-password', [AuthController::class, 'passwordEmail']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'passwordReset']);
+    Route::post('/reset-password', [AuthController::class, 'passwordUpdate']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::delete('/auth', [AuthController::class, 'logout']);
+
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
