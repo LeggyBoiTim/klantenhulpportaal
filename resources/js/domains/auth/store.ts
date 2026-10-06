@@ -11,7 +11,7 @@ export const isCurrentUserAdmin = computed(() => auth.value?.role === 'admin');
 
 // actions
 export const me = async () => {
-    const { data } = await getRequest('user');
+    const { data } = await getRequest('me');
     if (!data) return;
     auth.value = data;
 };

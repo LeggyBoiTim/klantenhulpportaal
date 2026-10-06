@@ -1,6 +1,8 @@
 <template>
     <b>Login</b>
     <Form :user="user" @submit="handleSubmit" />
+    <br>
+    <RouterLink to="/forgot-password">Wachtwoord vergeten?</RouterLink>
 </template>
 
 <script setup lang="ts">

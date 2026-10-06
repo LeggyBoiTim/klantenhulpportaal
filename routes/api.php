@@ -10,14 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::post('/auth', [AuthController::class, 'login']);
-    Route::get('/forgot-password', [AuthController::class, 'passwordRequest']);
     Route::post('/forgot-password', [AuthController::class, 'passwordEmail']);
-    Route::get('/reset-password/{token}', [AuthController::class, 'passwordReset']);
     Route::post('/reset-password', [AuthController::class, 'passwordUpdate']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class, 'user']);
+    Route::get('/me', [AuthController::class, 'me']);
     Route::delete('/auth', [AuthController::class, 'logout']);
 
     Route::get('/categories', [CategoryController::class, 'index']);
