@@ -13,8 +13,8 @@
 import { ref } from 'vue';
 import ErrorMessage from '../../../ErrorMessage.vue';
 
-const props = defineProps({ user: Object });
+const props = defineProps({ data: Object });
 const emit = defineEmits(['submit']);
-const form = ref({ ...props.user });
+const form = ref({ ...props.data });
 const handleSubmit = () => emit('submit', form.value); 
 </script>

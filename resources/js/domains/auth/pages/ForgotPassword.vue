@@ -1,19 +1,18 @@
 <template>
     <b>Wachtwoord vergeten</b>
-    <ForgotPasswordForm :user="user" @submit="handleSubmit" />
+    <ForgotPasswordForm :data="data" @submit="handleSubmit" />
 </template>
 
 <script setup lang="ts">
 import { forgotPassword } from '../store.js';
 import { ref } from 'vue';
 import ForgotPasswordForm from '../components/ForgotPasswordForm.vue';
-import { User } from '../../users/store.js';
 
-const user = ref({
+const data = ref({
     email: '',
 });
 
-const handleSubmit = async (data: User) => {
+const handleSubmit = async (data: unknown) => {
     await forgotPassword(data);
 }
 </script>
