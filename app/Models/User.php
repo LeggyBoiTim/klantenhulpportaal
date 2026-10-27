@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->hasMany(Reaction::class);
     }
 
+    public static function getByEmail(string $email)
+    {
+        return static::where('email', $email)->first();
+    }
+
     /**
      * Get the attributes that should be cast.
      *

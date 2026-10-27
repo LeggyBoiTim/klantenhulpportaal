@@ -6,11 +6,12 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\PasswordEmailRequest;
 use App\Http\Requests\Auth\PasswordUpdateRequest;
 use App\Models\User;
-use Illuminate\Auth\Events\PasswordReset;
+use App\Notifications\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -44,15 +45,17 @@ class AuthController extends Controller
         return response()->json(['message' => 'Je bent succesvol uitgelogd.']);
     }
 
-    public function passwordEmail(PasswordEmailRequest $request)
+    public function passwordEmail(PasswordEmailRequest $request): JsonResponse
     {
         $request->validated();
 
-        $status = Password::sendResetLink($request->only('email'));
+        $token = Str::random(60);
 
-        return $status === Password::ResetLinkSent
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+        // Write token in password_reset_tokens table
+
+        Notification::send(User::getByEmail($request['email']), new PasswordReset($token));
+
+         return response()->json(['message' => 'E-mail verstuurd.']);
     }
 
     public function passwordUpdate(PasswordUpdateRequest $request)
