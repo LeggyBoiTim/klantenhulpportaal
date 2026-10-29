@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ReactionPlaced extends Notification
+class ReactionPlacedNotification extends Notification
 {
     use Queueable;
 

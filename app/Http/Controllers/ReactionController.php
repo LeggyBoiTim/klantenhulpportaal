@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReactionRequest;
 use App\Http\Resources\ReactionResource;
 use App\Models\Reaction;
-use App\Notifications\ReactionPlaced;
+use App\Notifications\ReactionPlacedNotification;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 
@@ -24,7 +24,7 @@ class ReactionController extends Controller
 
         $reaction = Reaction::create($data);
 
-        Notification::send($reaction->ticket->user, new ReactionPlaced($reaction));
+        Notification::send($reaction->ticket->user, new ReactionPlacedNotification($reaction));
 
         return new ReactionResource($reaction);
     }

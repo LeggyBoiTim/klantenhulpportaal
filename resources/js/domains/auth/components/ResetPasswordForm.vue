@@ -11,7 +11,7 @@
         <input type="hidden" id="token" v-model="form.token">
 
         <br><br>
-        <button type="submit" style="cursor: pointer;">Verstuur link</button>
+        <button type="submit" style="cursor: pointer;">Wijzig wachtwoord</button>
     </form>
     
     <ErrorMessage />

@@ -9,13 +9,13 @@ import { resetPassword } from '../store.js';
 import ResetPasswordForm from '../components/ResetPasswordForm.vue';
 import { useRoute } from 'vue-router';
 
-const route = useRoute()
+const {email, token} = useRoute().params;
 
 const data = ref({
-    email: route.query.email,
+    email: decodeURI(String(email)),
     password: '',
     password_confirmation: '',
-    token: route.params.token
+    token: token
 });
 
 const handleSubmit = async (data: unknown) => {

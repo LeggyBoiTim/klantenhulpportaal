@@ -7,5 +7,5 @@ export const authRoutes =  [
     { path: '/login', component: Login, name: 'auth.login', meta: { guestOnly: true } },
     { path: '/me', component: Me, name: 'auth.me' },
     { path: '/forgot-password', component: ForgotPassword, name: 'auth.forgot-password', meta: { guestOnly: true } },
-    { path: '/reset-password/:token', component: ResetPassword, name: 'auth.reset-password', meta: { guestOnly: true } },
+    { path: '/reset-password/:token/:email', component: ResetPassword, name: 'auth.reset-password', meta: { guestOnly: true } },
 ];

@@ -6,10 +6,12 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\PasswordEmailRequest;
 use App\Http\Requests\Auth\PasswordUpdateRequest;
 use App\Models\User;
-use App\Notifications\PasswordReset;
+use App\Notifications\PasswordResetNotification;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
@@ -47,36 +49,37 @@ class AuthController extends Controller
 
     public function passwordEmail(PasswordEmailRequest $request): JsonResponse
     {
-        $request->validated();
+        $data = $request->validated();
 
         $token = Str::random(60);
+        $email = $data['email'];
+        $user = User::getByEmail($email);
 
-        // Write token in password_reset_tokens table
+        DB::table('password_reset_tokens')->insert([
+            'email' => $email,
+            'token' => $token,
+            'created_at' => new Carbon
+        ]);
 
-        Notification::send(User::getByEmail($request['email']), new PasswordReset($token));
+        Notification::send($user, new PasswordResetNotification($token, $email));
 
-         return response()->json(['message' => 'E-mail verstuurd.']);
+        return response()->json(['message' => 'E-mail verstuurd.']);
     }
 
-    public function passwordUpdate(PasswordUpdateRequest $request)
+    public function passwordUpdate(PasswordUpdateRequest $request): JsonResponse
     {
-        $request->validated();
+        $data = $request->validated();
         
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
+        $email = $data['email'];
+        $user = User::getByEmail($email);
 
-                $user->save();
+        $user->forceFill([
+            'password' => bcrypt($email),
+            'remember_token' => Str::random(60)
+        ])->save();
 
-                event(new PasswordReset($user));
-            }
-        );
+        DB::table('password_reset_tokens')->where('email', '=', $email)->delete();
 
-        return $status === Password::PasswordReset
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+        return response()->json(['message' => 'Wachtwoord gewijzigd.']);
     }
 }

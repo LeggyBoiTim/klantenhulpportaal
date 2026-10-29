@@ -32,7 +32,7 @@ export const forgotPassword = async (email: unknown) => {
     if (!data) return;
 };
 
-export const resetPassword = async (token: unknown) => {
-    const { data } = await postRequest('reset-password', token)
+export const resetPassword = async (credentials: unknown) => {
+    const { data } = await postRequest('reset-password', credentials)
     if (!data) return;
 };

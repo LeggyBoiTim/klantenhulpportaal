@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::post('/auth', [AuthController::class, 'login']);
     Route::post('/forgot-password', [AuthController::class, 'passwordEmail']);
-    Route::post('/reset-password', [AuthController::class, 'passwordUpdate']);
+    Route::post('/reset-password/{token}/{email}', [AuthController::class, 'passwordUpdate']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
