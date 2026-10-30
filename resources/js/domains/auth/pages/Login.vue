@@ -1,6 +1,6 @@
 <template>
     <b>Login</b>
-    <Form :user="user" @submit="handleSubmit" />
+    <LoginForm :user="user" @submit="handleSubmit" />
     <br>
     <RouterLink to="/forgot-password">Wachtwoord vergeten?</RouterLink>
 </template>
@@ -9,7 +9,7 @@
 import { createAuth } from '../store.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Form from '../components/Form.vue';
+import LoginForm from '../components/LoginForm.vue';
 
 const router = useRouter();
 

@@ -24,7 +24,7 @@ class PasswordUpdateRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'string'],
             'password' => ['required', 'string', Password::defaults()],
             'password_confirmation' => ['required', 'string', 'same:password'],
             'token' => ['required'],

@@ -7,8 +7,9 @@
 import { ref } from 'vue';
 import { resetPassword } from '../store.js';
 import ResetPasswordForm from '../components/ResetPasswordForm.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+const router = useRouter();
 const {email, token} = useRoute().params;
 
 const data = ref({
@@ -20,5 +21,6 @@ const data = ref({
 
 const handleSubmit = async (data: unknown) => {
     await resetPassword(data);
+    router.push({ name: 'auth.login' });
 }
 </script>

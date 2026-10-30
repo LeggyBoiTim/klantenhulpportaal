@@ -70,15 +70,29 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         
+        $token = $data['token'];
         $email = $data['email'];
+
         $user = User::getByEmail($email);
 
+        $record = DB::table('password_reset_tokens')
+            ->where('email', $email)
+            ->where('token', $token)
+            ->first();
+        
+        if (!$record) {
+            return response()->json(['message' => 'De resetlink is ongeldig of verlopen.'], 422);
+        }
+
         $user->forceFill([
-            'password' => bcrypt($email),
-            'remember_token' => Str::random(60)
+            'password' => bcrypt($data['password']),
+            'remember_token' => Str::random(10)
         ])->save();
 
-        DB::table('password_reset_tokens')->where('email', '=', $email)->delete();
+        DB::table('password_reset_tokens')
+            ->where('email', $email)
+            ->where('token', $token)
+            ->delete();
 
         return response()->json(['message' => 'Wachtwoord gewijzigd.']);
     }
