@@ -27,6 +27,11 @@ export const deleteAuth = async () => {
     auth.value = undefined;
 };
 
+export const registerUser = async (user: User) => {
+    const { data } = await postRequest('register', user);
+    if (!data) return;
+}
+
 export const forgotPassword = async (email: unknown) => {
     const { data } = await postRequest('forgot-password', email)
     if (!data) return;

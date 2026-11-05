@@ -9,8 +9,11 @@
             </template>
             <RouterLink to="/me">Me</RouterLink> |
             <button @click="handleLogout" style="cursor: pointer;">Log Uit</button>
-        </span> 
-        <RouterLink v-else to="/login">Login</RouterLink>
+        </span>
+        <span v-else>
+            <RouterLink to="/login">Log in</RouterLink> |
+            <RouterLink to="/register">Registreer</RouterLink>
+        </span>
     </nav>
     <hr>
     <router-view />

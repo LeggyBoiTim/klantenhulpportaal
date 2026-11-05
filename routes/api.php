@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::post('/auth', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
     Route::post('/forgot-password', [AuthController::class, 'passwordEmail']);
     Route::post('/reset-password', [AuthController::class, 'passwordUpdate']);
 });

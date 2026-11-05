@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\PasswordEmailRequest;
 use App\Http\Requests\Auth\PasswordUpdateRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use App\Notifications\PasswordResetNotification;
+use App\Notifications\UserRegisteredNotification;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -47,6 +47,19 @@ class AuthController extends Controller
         return response()->json(['message' => 'Je bent succesvol uitgelogd.']);
     }
 
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $data['password'] = bcrypt($data['password']);
+
+        $user = User::create($data);
+
+        Notification::send($user, new UserRegisteredNotification($user));
+
+        return response()->json(['message' => 'Je bent succesvol geregistreerd.']);
+    }
+
     public function passwordEmail(PasswordEmailRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -61,7 +74,7 @@ class AuthController extends Controller
             'created_at' => new Carbon
         ]);
 
-        Notification::send($user, new PasswordResetNotification($token, $email));
+        Notification::send($user, new PasswordResetNotification($token, $email, $user));
 
         return response()->json(['message' => 'E-mail verstuurd.']);
     }
@@ -72,7 +85,6 @@ class AuthController extends Controller
         
         $token = $data['token'];
         $email = $data['email'];
-
         $user = User::getByEmail($email);
 
         $record = DB::table('password_reset_tokens')

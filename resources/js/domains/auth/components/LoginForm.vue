@@ -3,10 +3,10 @@
         <label for="email">E-mail: </label>
         <input type="email" id="email" v-model="form.email" required/>
         <br>
-        <label for="password">Password: </label>
+        <label for="password">Wachtwoord: </label>
         <input type="password" id="password" v-model="form.password" required/>
         <br><br>
-        <button type="submit" style="cursor: pointer;">Login</button>
+        <button type="submit" style="cursor: pointer;">Log in</button>
     </form>
     
     <ErrorMessage />
