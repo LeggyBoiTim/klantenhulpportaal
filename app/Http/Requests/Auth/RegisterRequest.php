@@ -4,6 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use App\Http\Requests\BaseFormRequest;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends BaseFormRequest
@@ -27,9 +28,10 @@ class RegisterRequest extends BaseFormRequest
             'email' => ['required', 'email', 'string', 'max:255', 'unique:users'],
             'first_name' => ['required', 'string', 'max:50'],
             'last_name' => ['required', 'string', 'max:50'],
-            'phone_number' => ['required', 'string', 'regex:\+?[1-9][0-9]{7,14}'],
+            'phone_number' => ['required', 'string', 'regex:/^\+?[1-9][0-9]{7,14}$/'],
             'password' => ['required', 'string', Password::defaults()],
             'password_confirmation' => ['required', 'string', 'same:password'],
+            'role' => ['required', 'string', Rule::in(['user', 'admin'])],
         ];
     }
 }

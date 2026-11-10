@@ -4,10 +4,11 @@
 </template>
 
 <script setup lang="ts">
-import { createAuth } from '../store.js';
+import { registerUser } from '../store.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import RegisterForm from '../components/RegisterForm.vue';
+import { User } from '../../users/store.js';
 
 const router = useRouter();
 
@@ -18,10 +19,11 @@ const user = ref({
     phone_number: '',
     password: '',
     password_confirmation: '',
+    role: 'user',
 });
 
-const handleSubmit = async (data: unknown) => {
-    await createAuth(data);
+const handleSubmit = async (data: User) => {
+    await registerUser(data);
     router.push({ name: 'auth.login' });
 }
 </script>
