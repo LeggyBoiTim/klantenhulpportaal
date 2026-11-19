@@ -1,3 +1,4 @@
+import { postRequest } from '../../services/http';
 import { storeModuleFactory } from '../../services/store';
 import { Item } from '../../types';
 import { Note } from '../notes/store';
@@ -28,6 +29,23 @@ export interface Ticket extends Item {
 }
 
 const ticketStore = storeModuleFactory<Ticket>('tickets');
+
+// export const ticketStore = {
+//     getters: {...baseStore.getters},
+//     setters: {...baseStore.setters},
+//     actions: {...baseStore.actions,
+//         createReactionForTicket: () => {
+//             const {data} = await postRequest('ticket/{ticket}/create-reaction')
+//             baseStore.setters.setById(data)
+//         },
+//         createNoteForTicket: () => {
+//             const {data} = await postRequest('ticket/{ticket}/create-note')
+//             baseStore.setters.setById(data)
+//         }
+//     },
+// }
+
+// ticketStore.actions.createReactionForTicket()
 
 // getters
 export const getTickets = ticketStore.getters.all;
